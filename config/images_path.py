@@ -1,0 +1,1 @@
+# Images path mapped with a variable here. So only needs to change at one place if path changes.

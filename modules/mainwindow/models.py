@@ -1,0 +1,1 @@
+# All database logic written in the models.py

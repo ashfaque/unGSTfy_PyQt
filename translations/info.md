@@ -1,0 +1,1 @@
+### If planning to implement multiple languages. There is where all the translation files go.

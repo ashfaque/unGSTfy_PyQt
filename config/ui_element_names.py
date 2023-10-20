@@ -1,0 +1,1 @@
+# Static UI labels/buttons/headings name mapped with a variable here. So only needs to change at one place if label text changes.
