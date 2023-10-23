@@ -31,3 +31,11 @@ amount_without_gst = amount_without_gst if amount_without_gst[0] != '.' else '0'
 rate_of_gst = ((float(amount_with_gst) / float(amount_without_gst)) - 1) * 100 if float(amount_with_gst) != 0.0 and float(amount_without_gst) != 0.0 else 0.0
 result = str(round(rate_of_gst, 10))
 
+
+
+https://coderslegacy.com/pyinstaller-spec-file-tutorial/    # PyInstaller spec file tutorial  
+https://coderslegacy.com/cx_freeze-vs-pyinstaller-comparison/    # cx_freeze vs pyinstaller  
+https://coderslegacy.com/nuitka-vs-pyinstaller/    # nuitka vs pyinstaller  
+https://coderslegacy.com/better-alternatives-to-pyinstaller/    # pyinstaller alternatives  
+https://coderslegacy.com/python-cx_freeze-tutorial/    # cx_freeze tutorial  
+https://www.youtube.com/watch?v=UFz5kNTRk3g    # py_compile  
