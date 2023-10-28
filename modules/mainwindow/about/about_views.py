@@ -40,6 +40,7 @@ class AboutDialogView(QtWidgets.QDialog):
 
         description_label = QtWidgets.QLabel(APP_DESCRIPTION)
         description_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        description_label.setWordWrap(True)
         layout.addWidget(description_label)
 
         # Add a vertical spacer in the middle to center the button
