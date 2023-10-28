@@ -1,3 +1,11 @@
+# Home Page
+Buttons with vertical layout
+- unGSTfy Label
+- Calculate Taxable Value
+- Calculate GST Percent
+- Currency Converter
+
+
 # Calculating Taxable Value
 import re
 pattern = re.compile(r'[0-9.]+')
@@ -31,6 +39,9 @@ amount_without_gst = amount_without_gst if amount_without_gst[0] != '.' else '0'
 rate_of_gst = ((float(amount_with_gst) / float(amount_without_gst)) - 1) * 100 if float(amount_with_gst) != 0.0 and float(amount_without_gst) != 0.0 else 0.0
 result = str(round(rate_of_gst, 10))
 
+
+# Currency Converter
+Same as google currency converter, auto calculates when inserted data, two integer box side by side, and just below it are the currency convertion drop downs.
 
 
 https://coderslegacy.com/pyinstaller-spec-file-tutorial/    # PyInstaller spec file tutorial  
