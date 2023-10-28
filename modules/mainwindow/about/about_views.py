@@ -45,13 +45,13 @@ class AboutDialogView(QtWidgets.QDialog):
         # Add a vertical spacer in the middle to center the button
         layout.addStretch(1)
 
-        close_button = QtWidgets.QPushButton(CLOSE_BUTTON_NAME)
-        close_button.setSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
-        close_button.clicked.connect(self.close)
+        self.close_button = QtWidgets.QPushButton(CLOSE_BUTTON_NAME)
+        self.close_button.setSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
+        # close_button.clicked.connect(self.close)
 
         # Add the button with alignment to center it horizontally
         button_container = QtWidgets.QVBoxLayout()
-        button_container.addWidget(close_button)
+        button_container.addWidget(self.close_button)
         button_container.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         layout.addLayout(button_container)
 
