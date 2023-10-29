@@ -12,7 +12,7 @@ from config.ui_element_names import (
     , MENU_BAR_HELP_NAME
     , MENU_BAR_HELP_ITEM_ABOUT
 )
-from config.images_path import APP_LOGO_PATH
+from config.assets_path import APP_LOGO_PATH
 
 
 class MainWindowView(QtWidgets.QMainWindow):
