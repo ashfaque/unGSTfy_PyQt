@@ -136,4 +136,5 @@ test.py
 logs/
 test/
 test.txt
-commands.sh
+# commands.sh
+aliases.sh
