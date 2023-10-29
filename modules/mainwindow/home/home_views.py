@@ -5,6 +5,7 @@ from config.ui_element_names import (
     , HOME_CALCULATE_GST_PERCENT_BUTTON_NAME
     , HOME_CURRENCY_CONVERTER_BUTTON_NAME
     , HOME_BUTTONS_FONT_FAMILY
+    , HOME_BACK_BUTTON_NAME
 )
 
 
@@ -16,8 +17,17 @@ class HomeView(QtWidgets.QWidget):
     def setupUi(self):
         self.setObjectName("Home")
         # self.resize(500, 317)    # Not needed as the parent widget will handle the size.
+
         self.verticalLayout_home = QtWidgets.QVBoxLayout(self)
         self.verticalLayout_home.setObjectName("verticalLayout_home")
+        self.stackedWidget = QtWidgets.QStackedWidget(parent=self)
+        self.stackedWidget.setObjectName("stackedWidget")
+
+        self.buttonPage = QtWidgets.QWidget()
+        self.buttonPage.setObjectName("buttonPage")
+
+        self.verticalLayout_all_buttons = QtWidgets.QVBoxLayout(self.buttonPage)
+        self.verticalLayout_all_buttons.setObjectName("verticalLayout_all_buttons")
 
         # horizontal_Layout_Calculate_Taxable_Value
         self.horizontal_Layout_Calculate_Taxable_Value = QtWidgets.QHBoxLayout()
@@ -34,14 +44,14 @@ class HomeView(QtWidgets.QWidget):
         self.pushButton_Calculate_Taxable_Value.setFont(font)
         self.pushButton_Calculate_Taxable_Value.setObjectName("pushButton_Calculate_Taxable_Value")
         self.horizontal_Layout_Calculate_Taxable_Value.addWidget(self.pushButton_Calculate_Taxable_Value)
-        self.verticalLayout_home.addLayout(self.horizontal_Layout_Calculate_Taxable_Value)
+        self.verticalLayout_all_buttons.addLayout(self.horizontal_Layout_Calculate_Taxable_Value)
 
         # Spacer 1
         self.horizontalLayout_Spacer1 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_Spacer1.setObjectName("horizontalLayout_Spacer1")
         spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)    # TODO: Dynamic 
         self.horizontalLayout_Spacer1.addItem(spacerItem)
-        self.verticalLayout_home.addLayout(self.horizontalLayout_Spacer1)
+        self.verticalLayout_all_buttons.addLayout(self.horizontalLayout_Spacer1)
 
         # horizontal_Layout_Calculate_GST_Percent
         self.horizontal_Layout_Calculate_GST_Percent = QtWidgets.QHBoxLayout()
@@ -58,14 +68,14 @@ class HomeView(QtWidgets.QWidget):
         self.pushButton_Calculate_GST_Percent.setFont(font)
         self.pushButton_Calculate_GST_Percent.setObjectName("pushButton_Calculate_GST_Percent")
         self.horizontal_Layout_Calculate_GST_Percent.addWidget(self.pushButton_Calculate_GST_Percent)
-        self.verticalLayout_home.addLayout(self.horizontal_Layout_Calculate_GST_Percent)
+        self.verticalLayout_all_buttons.addLayout(self.horizontal_Layout_Calculate_GST_Percent)
 
         # Spacer 2
         self.horizontalLayout_Spacer2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_Spacer2.setObjectName("horizontalLayout_Spacer2")
         spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)    # TODO: Dynamic 
         self.horizontalLayout_Spacer2.addItem(spacerItem1)
-        self.verticalLayout_home.addLayout(self.horizontalLayout_Spacer2)
+        self.verticalLayout_all_buttons.addLayout(self.horizontalLayout_Spacer2)
 
         # horizontal_Layout_Currency_Converter
         self.horizontal_Layout_Currency_Converter = QtWidgets.QHBoxLayout()
@@ -82,7 +92,14 @@ class HomeView(QtWidgets.QWidget):
         self.pushButton_Currency_Converter.setFont(font)
         self.pushButton_Currency_Converter.setObjectName("pushButton_Currency_Converter")
         self.horizontal_Layout_Currency_Converter.addWidget(self.pushButton_Currency_Converter)
-        self.verticalLayout_home.addLayout(self.horizontal_Layout_Currency_Converter)
+        self.verticalLayout_all_buttons.addLayout(self.horizontal_Layout_Currency_Converter)
+
+        self.stackedWidget.addWidget(self.buttonPage)
+        self.verticalLayout_home.addWidget(self.stackedWidget)
+
+        self.backButton = QtWidgets.QPushButton(HOME_BACK_BUTTON_NAME, parent=self)
+        self.backButton.setVisible(False)  # Initially hidden
+        self.verticalLayout_home.addWidget(self.backButton)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)

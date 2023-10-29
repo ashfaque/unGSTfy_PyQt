@@ -22,12 +22,18 @@ class MainWindowController(MainWindowView):
     def setupViews(self):
         self.homeView = HomeController(parent=self)
         self.stackedcentralwidget.addWidget(self.homeView)
+        self.stackedcentralwidget.setCurrentWidget(self.homeView)
 
         self.aboutView = AboutDialogController(parent=self)
 
 
     def onActionHomeTriggered(self):
-        self.stackedcentralwidget.setCurrentWidget(self.homeView)
+        # print('Home Stack Widgets Count---> ', self.homeView.stackedWidget.count())
+        # for i in range(self.homeView.stackedWidget.count()):
+        #     print('Home Stack Widgets Names---> ', (self.homeView.stackedWidget.widget(i).objectName()))
+        # self.homeView.stackedWidget.setCurrentIndex(0)
+        self.homeView.stackedWidget.setCurrentWidget(self.homeView.buttonPage)
+        self.homeView.backButton.setVisible(False)
 
     def onActionExitTriggered(self):
         self.close()
