@@ -1,5 +1,7 @@
 # Static UI labels/buttons/headings name mapped with a variable here. So only needs to change at one place if label text changes.
 
+# GLOBAL
+CLOSE_BUTTON_NAME = 'Close'
 
 # about
 APP_NAME = 'unGSTfy'
@@ -22,5 +24,8 @@ MENU_BAR_HELP_NAME = 'Help'
 MENU_BAR_HELP_ITEM_ABOUT = 'About'
 
 
-# GLOBAL
-CLOSE_BUTTON_NAME = 'Close'
+# home
+HOME_CALCULATE_TAXABLE_VALUE_BUTTON_NAME = 'Calculate Taxable Value'
+HOME_CALCULATE_GST_PERCENT_BUTTON_NAME = 'Calculate GST Percent'
+HOME_CURRENCY_CONVERTER_BUTTON_NAME = 'Currency Converter'
+HOME_BUTTONS_FONT_FAMILY = 'TF2 Build'

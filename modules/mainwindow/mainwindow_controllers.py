@@ -20,20 +20,19 @@ class MainWindowController(MainWindowView):
         self.actionAbout.triggered.connect(self.onActionAboutTriggered)
 
     def setupViews(self):
-        # self.homeView = HomeController(parent=self)    # TODO: Do it after setting up stacked widget in views.py
-        # self.stackedcentralwidget.addWidget(self.homeView)    # TODO: Do it after setting up stacked widget in views.py
-        
+        self.homeView = HomeController(parent=self)
+        self.stackedcentralwidget.addWidget(self.homeView)
+
         self.aboutView = AboutDialogController(parent=self)
 
 
     def onActionHomeTriggered(self):
-        # self.stackedcentralwidget.setCurrentWidget(self.homeView)    # TODO: AttributeError: 'MainWindowController' object has no attribute 'stackedWidget'. Do it after setting up stacked widget in views.py
-        pass
+        self.stackedcentralwidget.setCurrentWidget(self.homeView)
 
     def onActionExitTriggered(self):
         self.close()
 
-    def onActionAboutTriggered(self):    # TODO: Create a about module parallel to home dir in mainwindow, register it in __init__.py of modules. Also register it in setupViews() method of this file.
+    def onActionAboutTriggered(self):
         self.aboutView.exec()
 
     def closeEvent(self, event):
