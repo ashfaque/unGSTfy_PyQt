@@ -20,7 +20,7 @@ class MainWindowController(MainWindowView):
         self.actionAbout.triggered.connect(self.onActionAboutTriggered)
 
     def setupViews(self):
-        self.homeView = HomeController(parent=self)
+        self.homeView = HomeController(parent=self)    # Pass a reference to self (MainWindowController)
         self.stackedcentralwidget.addWidget(self.homeView)
         self.stackedcentralwidget.setCurrentWidget(self.homeView)
 

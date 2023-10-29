@@ -4,7 +4,9 @@ from modules.mainwindow.home.gst_percent.gst_percent_controllers import GSTPerce
 from modules.mainwindow.home.currency_converter.currency_converter_controllers import CurrencyConverterController
 
 class HomeController(HomeView):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None):    # ? You can take the main_window_controller as an argument and use it to connect the signals to the slots in the main_window_controller. This way you can avoid the use of the self.parent() method. Just assign self.main_window_controller = parent or main_window_controller in the __init__ method.
+    # ? def __init__(self, main_window_controller, parent=None):
+        # ? self.main_window_controller = main_window_controller  # Store a reference to the MainWindowController
         super().__init__(parent=parent)
         self.setupSignals()
         self.setupViews()
