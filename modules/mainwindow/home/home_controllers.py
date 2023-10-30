@@ -19,10 +19,10 @@ class HomeController(HomeView):
     
     def setupViews(self):
         self.taxableValueView = TaxableValueController(parent=self)
-        self.stackedWidget.addWidget(self.taxableValueView)
+        # self.stackedWidget.addWidget(self.taxableValueView)
 
         self.gstPercentView = GSTPercentController(parent=self)
-        self.stackedWidget.addWidget(self.gstPercentView)
+        # self.stackedWidget.addWidget(self.gstPercentView)
 
         # self.currencyConverterView = CurrencyConverterController(parent=self)    # TODO
         # self.stackedWidget.addWidget(self.currencyConverterView)
