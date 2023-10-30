@@ -14,7 +14,7 @@ class HomeController(HomeView):
     def setupSignals(self):
         self.pushButton_Calculate_Taxable_Value.clicked.connect(self.onPushButtonCalculateTaxableValueClicked)
         self.pushButton_Calculate_GST_Percent.clicked.connect(self.onPushButtonCalculateGSTPercentClicked)
-        # self.pushButton_Currency_Converter.clicked.connect(self.onPushButtonCurrencyConverterClicked)    # TODO
+        self.pushButton_Currency_Converter.clicked.connect(self.onPushButtonCurrencyConverterClicked)
         self.backButton.clicked.connect(self.backButtonClicked)
     
     def setupViews(self):
@@ -24,8 +24,8 @@ class HomeController(HomeView):
         self.gstPercentView = GSTPercentController(parent=self)
         self.stackedWidget.addWidget(self.gstPercentView)
 
-        # self.currencyConverterView = CurrencyConverterController(parent=self)    # TODO
-        # self.stackedWidget.addWidget(self.currencyConverterView)
+        self.currencyConverterView = CurrencyConverterController(parent=self)
+        self.stackedWidget.addWidget(self.currencyConverterView)
 
 
     def onPushButtonCalculateTaxableValueClicked(self):
