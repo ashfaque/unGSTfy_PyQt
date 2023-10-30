@@ -55,7 +55,7 @@ class TaxableValueView(QtWidgets.QWidget):
         self.horizontalLayout_GST_Percent.addWidget(self.lineEdit_GST_Percent)
         self.verticalLayout.addLayout(self.horizontalLayout_GST_Percent)
 
-        # Result
+        # Result: Taxable Value
         self.horizontalLayout_Result_Value = QtWidgets.QHBoxLayout()
         self.horizontalLayout_Result_Value.setObjectName("horizontalLayout_Result_Value")
         self.label_Result_Value = QtWidgets.QLabel(parent=self)
@@ -87,5 +87,5 @@ class TaxableValueView(QtWidgets.QWidget):
         self.lineEdit_GST_Percent.setToolTip(_translate("Form", TAXABLE_VALUE_GST_PERCENT_PLACEHOLDER_TEXT))
         self.lineEdit_GST_Percent.setPlaceholderText(_translate("Form", TAXABLE_VALUE_GST_PERCENT_PLACEHOLDER_TEXT))
         self.label_Result_Value.setToolTip(_translate("Form", TAXABLE_VALUE_RESULT_TOOLTIP_TEXT))
-        self.label_Result_Value.setText(_translate("Form", "₹"))
+        self.label_Result_Value.setText(_translate("Form", TAXABLE_VALUE_RESULT_TOOLTIP_TEXT))
 

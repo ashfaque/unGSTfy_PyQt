@@ -1,4 +1,3 @@
-import re
 from decimal import Decimal, DecimalException
 
 from modules.mainwindow.home.taxable_value.taxable_value_views import TaxableValueView

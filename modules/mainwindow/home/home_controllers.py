@@ -13,7 +13,7 @@ class HomeController(HomeView):
 
     def setupSignals(self):
         self.pushButton_Calculate_Taxable_Value.clicked.connect(self.onPushButtonCalculateTaxableValueClicked)
-        # self.pushButton_Calculate_GST_Percent.clicked.connect(self.onPushButtonCalculateGSTPercentClicked)    # TODO
+        self.pushButton_Calculate_GST_Percent.clicked.connect(self.onPushButtonCalculateGSTPercentClicked)
         # self.pushButton_Currency_Converter.clicked.connect(self.onPushButtonCurrencyConverterClicked)    # TODO
         self.backButton.clicked.connect(self.backButtonClicked)
     
@@ -21,8 +21,8 @@ class HomeController(HomeView):
         self.taxableValueView = TaxableValueController(parent=self)
         self.stackedWidget.addWidget(self.taxableValueView)
 
-        # self.gstPercentView = GSTPercentController(parent=self)    # TODO
-        # self.stackedWidget.addWidget(self.gstPercentView)
+        self.gstPercentView = GSTPercentController(parent=self)
+        self.stackedWidget.addWidget(self.gstPercentView)
 
         # self.currencyConverterView = CurrencyConverterController(parent=self)    # TODO
         # self.stackedWidget.addWidget(self.currencyConverterView)
@@ -34,12 +34,20 @@ class HomeController(HomeView):
 
     def onPushButtonCalculateGSTPercentClicked(self):
         self.stackedWidget.setCurrentWidget(self.gstPercentView)
+        self.backButton.setVisible(True)    # Show the "Back" button
         
     def onPushButtonCurrencyConverterClicked(self):
         self.stackedWidget.setCurrentWidget(self.currencyConverterView)
+        self.backButton.setVisible(True)    # Show the "Back" button
 
     def backButtonClicked(self):
+        self.stackedWidget.setCurrentWidget(self.buttonPage)
+        self.stackedWidget.setCurrentIndex(0)
+        self.backButton.setVisible(False)    # Show/hide the "Back" button as needed
+
+        '''
         current_index = self.stackedWidget.currentIndex()
         if current_index > 0:
             self.stackedWidget.setCurrentIndex(current_index - 1)
         self.backButton.setVisible(current_index > 1)    # Show/hide the "Back" button as needed
+        '''
