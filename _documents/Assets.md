@@ -1,3 +1,5 @@
+https://stackoverflow.com/questions/66286229/create-pyqt6-python-project-executable
+
 Handling assets, such as images, gifs, videos, PDFs, and other files, in a PyQt6 application to ensure they load correctly in the executable on different platforms (macOS, Linux, Windows) involves bundling these assets with your application. This guide will walk you through the process step by step:
 
 **1. Organize Your Assets:**
