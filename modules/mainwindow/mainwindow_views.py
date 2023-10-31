@@ -69,6 +69,10 @@ class MainWindowView(QtWidgets.QMainWindow):
         self.setWindowTitle(_translate("MainWindow", APP_NAME))
 
         self.setWindowIcon(QtGui.QIcon(APP_LOGO_PATH))
+        # icon = QtGui.QIcon()
+        # icon.addPixmap(QtGui.QPixmap(APP_LOGO_PATH), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        # # icon.addPixmap(QtGui.QPixmap(APP_LOGO_PATH), QtGui.QIcon.Mode.Selected, QtGui.QIcon.State.On)
+        # self.setWindowIcon(icon)
 
         self.menuMenu.setTitle(_translate("MainWindow", MENU_BAR_MENU_NAME))
 
