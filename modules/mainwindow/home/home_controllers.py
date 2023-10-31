@@ -51,3 +51,4 @@ class HomeController(HomeView):
             self.stackedWidget.setCurrentIndex(current_index - 1)
         self.backButton.setVisible(current_index > 1)    # Show/hide the "Back" button as needed
         '''
+
