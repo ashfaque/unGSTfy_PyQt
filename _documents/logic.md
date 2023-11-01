@@ -41,8 +41,7 @@ result = str(round(rate_of_gst, 10))
 
 
 # [TODO] Currency Converter
-Same as google currency converter, auto calculates when inserted data, two integer box side by side, and just below it are the currency convertion drop downs.  
-With non-negative float value validation.
+Auto calculates when inserted data, two integer box side by side, and just below it are the currency convertion drop downs.  
 ```
                                     Convert From Value
 Value of Convert From     =     ------------------------------    x    EUR exchange of 1 Convert To     =     Value of Convert To
@@ -53,6 +52,24 @@ List of all Currencies: http://api.exchangeratesapi.io/v1/symbols?access_key=012
 1 value Exchange Rates of all currencies: http://api.exchangeratesapi.io/v1/latest?access_key=012432093fd9fd5a4f33393fee22c95b&base=EUR  
 
 If data not found for today in the sqlite3 database whenever the page loads, then hit the API, save in the DB, if no internet (show user the status of it).
+
++ **Pseudo Code:**
+* Whenever that page of currency conversion loads. Do these:
+* Try to find the sqlite3 DB in local system
+* if not found create one
+* Also when hitting API, api end point at one file mapped to a variable in api.py, api key in a pastebin raw file which will be fetched in real time, if not able to fetch then show currency conversion dont available at this moment. After api returns the response that response is bound in another variable in models.py of that module. And then used in the controllers.py.
+* In sqlite3 db try to locate table for storing available currency list
+    - If table not found, create one table, hit currency list api to fetch data and save in that table, in the format, code: name(code). If api gives no data or failed, display currency conversion not avaialble at this moment.
+* Try to fetch data of currency list from the table.
+    - If no data fetched show currency conversion down for a while.
+    - if data, then fetch it and store in a dict datatype in a variable.
+* In sqlite3 try to locate the table which stores today's currency exchange rates for 1 EUR.
+    - If table not found, create one table, hit currency exchange rate api to fetch data and save in the table.
+* Try to fetch data for currency exchange rate from the table for today's date.
+    - If no data fetched show currency conversion down for a while.
+    - if data, then store it in a variable in dict datatype for calculation purpose later on
+* From combo box when user have chosen any display name, the corresponding code of that display name of currency will be selected from the currency list cache dict. and will be used for calculation purpose as per the formula given above. For both combo boxes.
+* Now if user enters in any of the lineedits convert to or from, the calculation will be done according to the formula above and the result will be displayed in the line edit across the user input lineedit and vice versa.
 
 
 # [TODO] Search for TODO comments and do it.
