@@ -159,5 +159,6 @@ class CurrencyConverterView(QtWidgets.QWidget):
         # self.comboBox_Currency_To.setItemText(0, _translate("Form", "INR"))
         # self.comboBox_Currency_To.setItemText(1, _translate("Form", "PKR"))
         # self.comboBox_Currency_To.setItemText(2, _translate("Form", "RUB"))
-        self.label_Remaining_Monthly_Conversions_Text.setText(_translate("Form", CURRENCY_CONVERT_REMAINING_MONTHLY_CONVERSIONS_TEXT))
-        self.label_Remaining_Monthly_Conversions_Value.setText(_translate("Form", ""))
+        # self.label_Remaining_Monthly_Conversions_Text.setText(_translate("Form", CURRENCY_CONVERT_REMAINING_MONTHLY_CONVERSIONS_TEXT))
+        self.label_Remaining_Monthly_Conversions_Text.setText(_translate("Form", ""))
+        self.label_Remaining_Monthly_Conversions_Value.setText(_translate("Form", ""))    # ? Also used for internet connection status.
