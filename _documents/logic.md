@@ -1,4 +1,4 @@
-# Home Page
+# [DONE] Home Page
 Buttons with vertical layout
 - unGSTfy Label
 - Calculate Taxable Value
@@ -6,7 +6,7 @@ Buttons with vertical layout
 - Currency Converter
 
 
-# Calculating Taxable Value
+# [DONE] Calculating Taxable Value
 import re  
 pattern = re.compile(r'[0-9.]+')  
 
@@ -23,7 +23,7 @@ amount_without_gst = (100 * float(amount_with_gst)) / (100 + float(rate_of_gst))
 result = str(round(amount_without_gst, 10))  
 
 
-# Calculating GST percent
+# [DONE] Calculating GST percent
 import re  
 pattern = re.compile(r'[0-9.]+')  
 
@@ -40,10 +40,25 @@ rate_of_gst = ((float(amount_with_gst) / float(amount_without_gst)) - 1) * 100 i
 result = str(round(rate_of_gst, 10))  
 
 
-# Currency Converter
+# [TODO] Currency Converter
 Same as google currency converter, auto calculates when inserted data, two integer box side by side, and just below it are the currency convertion drop downs.  
+With non-negative float value validation.
+```
+                                    Convert From Value
+Value of Convert From     =     ------------------------------    x    EUR exchange of 1 Convert To     =     Value of Convert To
+                                EUR exchange of 1 Convert From
+```
+
+List of all Currencies: http://api.exchangeratesapi.io/v1/symbols?access_key=012432093fd9fd5a4f33393fee22c95b  
+1 value Exchange Rates of all currencies: http://api.exchangeratesapi.io/v1/latest?access_key=012432093fd9fd5a4f33393fee22c95b&base=EUR  
+
+If data not found for today in the sqlite3 database whenever the page loads, then hit the API, save in the DB, if no internet (show user the status of it).
 
 
+# [TODO] Search for TODO comments and do it.
+
+
+# [TODO] Converting Py to executable
 https://coderslegacy.com/pyinstaller-spec-file-tutorial/    # PyInstaller spec file tutorial  
 https://coderslegacy.com/cx_freeze-vs-pyinstaller-comparison/    # cx_freeze vs pyinstaller  
 https://coderslegacy.com/nuitka-vs-pyinstaller/    # nuitka vs pyinstaller  
