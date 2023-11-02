@@ -1,3 +1,5 @@
 # Images path mapped with a variable here. So only needs to change at one place if path changes.
 
-APP_LOGO_PATH = 'assets/images/gst_logo.png'
+from utils.global_functions import assets_base_path_according_to_dev_or_exec
+
+APP_LOGO_PATH = assets_base_path_according_to_dev_or_exec('assets/images/gst_logo.png')

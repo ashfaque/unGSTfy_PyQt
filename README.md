@@ -11,3 +11,15 @@ This is the entry point of the application. Create an instance of `QApplication`
 
 
 Using Python Version: 3.10.11
+
+### Pyinstaller
+
+#### Command to build single executable file
+```sh
+pyinstaller --noconfirm --onefile --windowed --clean --name "unGSTfy" --icon "D:/FULL_PATH/unGSTfy_PyQt/assets/icons/gst_logo.ico" --log-level "INFO" --add-data "D:/FULL_PATH/unGSTfy_PyQt/assets;assets/"  "D:/FULL_PATH/unGSTfy_PyQt/main.py"
+```
+
+#### Command for debugging with console based executable and directory bulid.
+```sh
+pyinstaller --noconfirm --onedir --console --clean --name "unGSTfy" --icon "D:/FULL_PATH/unGSTfy_PyQt/assets/icons/gst_logo.ico" --log-level "INFO" --add-data "D:/FULL_PATH/unGSTfy_PyQt/assets;assets/"  "D:/FULL_PATH/unGSTfy_PyQt/main.py"
+```
