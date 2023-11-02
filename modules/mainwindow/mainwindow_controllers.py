@@ -5,19 +5,23 @@ from PyQt6 import QtWidgets
 from modules.mainwindow.mainwindow_views import MainWindowView
 from modules.mainwindow.home.home_controllers import HomeController
 from modules.mainwindow.about.about_controllers import AboutDialogController
-
+from config.assets_path import initialize_assets
 
 class MainWindowController(MainWindowView):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.show()
         self.setupSignals()
+        self.initializeAssets()
         self.setupViews()
 
     def setupSignals(self):
         self.actionHome.triggered.connect(self.onActionHomeTriggered)
         self.actionExit.triggered.connect(self.onActionExitTriggered)
         self.actionAbout.triggered.connect(self.onActionAboutTriggered)
+
+    def initializeAssets(self):
+        _ = initialize_assets()
 
     def setupViews(self):
         self.homeView = HomeController(parent=self)    # Pass a reference to self (MainWindowController)
