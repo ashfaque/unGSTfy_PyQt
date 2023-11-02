@@ -23,3 +23,9 @@ pyinstaller --noconfirm --onefile --windowed --clean --name "unGSTfy" --icon "D:
 ```sh
 pyinstaller --noconfirm --onedir --console --clean --name "unGSTfy" --icon "D:/FULL_PATH/unGSTfy_PyQt/assets/icons/gst_logo.ico" --log-level "INFO" --add-data "D:/FULL_PATH/unGSTfy_PyQt/assets;assets/"  "D:/FULL_PATH/unGSTfy_PyQt/main.py"
 ```
+
+
+### AppData Paths:
+- Windows : `C:/Users/USERNAME/AppData/Roaming/unGSTfy/`
+- macOS : 
+- LINUX : 
