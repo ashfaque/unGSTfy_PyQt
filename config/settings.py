@@ -1,12 +1,13 @@
 
 import os
+import sys
 
-from PyQt6 import QtCore
+from PyQt6 import QtCore, QtSql
 
 from config.ui_element_names import APP_NAME
 from utils.global_functions import is_frozen_executable
 
-class SettingsManager:
+class AppSettingsManager:
     def __init__(self):
         self.app_name = APP_NAME
         # self.settings_dir = os.path.join(os.getenv("APPDATA"), app_name)
@@ -48,12 +49,270 @@ class SettingsManager:
 
 
 ### * Usage:-
-# from config.settings import SettingsManager
-# settings_manager = SettingsManager()
+# from config.settings import AppSettingsManager
+# settings_manager = AppSettingsManager()
 # settings_manager.save_data_in_settings('key1', 'value1')
 # loaded_settings = settings_manager.load_data_from_settings()
 # print('loaded_settings---> ', loaded_settings)
 
+
+
+
+class LocalDatabaseModel:
+    def __init__(self):
+        self.app_name = APP_NAME
+        # self.local_db_dir = os.path.join(os.getenv("APPDATA"), app_name)
+
+        # ? Get the writable location for application data, platform independent.
+        if is_frozen_executable():
+            self.local_db_dir = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
+        else:    # If development environment.
+            self.local_db_dir = os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+
+        # ? Create the directory if it doesn't exist.
+        if not os.path.exists(self.local_db_dir):
+            os.makedirs(self.local_db_dir)
+
+        # ? Define the settings file path.
+        self.db_file_path = f"{self.local_db_dir}/unGSTfy_db.db"    # TODO: Global variable defined in config/constants.py or .sqlite3
+
+        self.db = None    # ? Initialize the database connection object as None.
+
+        # self.connect_to_database()
+        self.open_db_connection()
+
+
+    def __enter__(self):
+        self.open_db_connection()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close_db_connection()
+
+    # def __del__(self):
+    #     self.close_db_connection()
+
+    # def __call__(self):
+    #     self.open_db_connection()
+    #     return self
+
+    def __str__(self):
+        return f"Database connection object: {self.db}"
+
+    def __repr__(self):
+        return f"Database connection object: {self.db}"
+
+
+    # def connect_to_database(self):
+    def open_db_connection(self):
+        # Initialize QtSql.QSqlDatabase with the custom location
+        self.db = QtSql.QSqlDatabase.addDatabase("QSQLITE")
+        self.db.setDatabaseName(self.db_file_path)
+
+        if not self.db.open():
+            print("Error: Could not connect to the database: ", self.db.lastError().text())    # TODO: To show this to user.
+            # self.label.setText("Failed to connect database")
+            sys.exit(1)
+
+
+    def close_db_connection(self):
+        if self.db is not None:
+            self.db.close()
+            self.db = None
+
+
+    def create_table_if_not_exists(self, table_name: str, columns: dict):    # ? eg., columns = {'date': ['TEXT', 'NOT NULL', 'DEFAULT CURRENT_TIMESTAMP'], 'json_data': ['TEXT', 'NOT NULL', 'DEFAULT {}']}
+        query = QtSql.QSqlQuery()
+        query_to_execute = f'''
+                CREATE TABLE IF NOT EXISTS {table_name} (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ''' + ', '.join([f"{column_name} {' '.join(column_attributes)}" for column_name, column_attributes in columns.items()]) + ')'
+
+        if not query.exec(query_to_execute):
+            print("Error: Failed to create table", query.lastError().text())    # TODO: To show this to user.
+        else:   # If table created successfully.
+            self.db.commit()
+
+        query.finish()
+        query.clear()
+        # self.db.close()
+
+
+    # TODO: Implement alter table method, if anything in column names or attributes changes.
+
+    def insert_data(self, table_name: str, data: dict):    # ? eg., data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}
+        query = QtSql.QSqlQuery()
+        query_to_execute = f'''
+                INSERT INTO {table_name} (
+                    {', '.join(data.keys())}
+                ) VALUES (
+                    {', '.join([f":{key}" for key in data.keys()])}
+                )
+        '''
+        query.prepare(query_to_execute)
+
+        for key, value in data.items():
+            query.bindValue(f":{key}", str(value))
+
+        if query.exec():
+            self.db.commit()
+        else:
+            print("Error: Failed to insert data: ", query.lastError().text())    # TODO: To show this to user.
+        query.finish()
+        query.clear()
+
+
+    def update_data(self, table_name: str, data: dict, where: dict):    # ? eg., data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}, where = {'id': 1}
+        query = QtSql.QSqlQuery()
+        query_to_execute = f'''
+                UPDATE {table_name} SET
+                    {', '.join([f"{key} = :{key}" for key in data.keys()])}
+                WHERE
+                    {', '.join([f"{key} = :{key}" for key in where.keys()])}
+        '''
+        query.prepare(query_to_execute)
+        for key, value in data.items():
+            query.bindValue(f":{key}", str(value))
+        for key, value in where.items():
+            query.bindValue(f":{key}", str(value))
+
+        if query.exec():
+            self.db.commit()
+        else:
+            print("Error: Failed to update data: ", query.lastError().text())    # TODO: To show this to user.
+        query.finish()
+        query.clear()
+
+
+    def delete_data(self, table_name: str, where: dict):    # ? eg., where = {'id': 1}
+        query = QtSql.QSqlQuery()
+        query_to_execute = f'''
+                DELETE FROM {table_name}
+                WHERE
+                    {', '.join([f"{key} = :{key}" for key in where.keys()])}
+        '''
+        query.prepare(query_to_execute)
+        for key, value in where.items():
+            query.bindValue(f":{key}", str(value))
+
+        if query.exec():
+            self.db.commit()
+        else:
+            print("Error: Failed to delete data: ", query.lastError().text())    # TODO: To show this to user.
+        query.finish()
+        query.clear()
+
+
+    def select_data(self, table_name: str, columns: list, where: dict):    # ? eg., columns = ['id', 'date', 'json_data'], where = {'id': 1}
+        query = QtSql.QSqlQuery()
+        query_to_execute = f'''
+                SELECT
+                    {', '.join(columns)}
+                FROM
+                    {table_name}
+                WHERE
+                    {', '.join([f"{key} = :{key}" for key in where.keys()])}
+        '''    # TODO: Conditional operators needs to be implemented. along with date(data_date) etc.
+
+        query.prepare(query_to_execute)
+        for key, value in where.items():
+            query.bindValue(f":{key}", str(value))
+
+        print('query.exec()---> ', query.lastQuery())
+
+        result = []
+        if query.exec():
+            while query.next():
+                row = {}
+                for column in columns:
+                    row[column] = query.value(column)
+                result.append(row)    # [{column1: value1, column2: value2}, {column1: value1, column2: value2}, ...]
+                # result.append([query.value(i) for i in range(len(columns))])    # [query.value(0), query.value(1), query.value(2)]
+            self.db.commit()
+        else:
+            print("Error: Failed to fetch data: ", query.lastError().text())    # TODO: To show this to user.
+        query.finish()
+        query.clear()
+        return result
+
+
+    def select_all_data(self, table_name: str, columns: list):
+        query = QtSql.QSqlQuery()
+        query_to_execute = f'''
+                SELECT
+                    {', '.join(columns)}
+                FROM
+                    {table_name}
+        '''
+        query.prepare(query_to_execute)
+
+        result = []
+        if query.exec():
+            while query.next():
+                row = {}
+                for column in columns:
+                    row[column] = query.value(column)
+                result.append(row)    # [{column1: value1, column2: value2}, {column1: value1, column2: value2}, ...]
+            self.db.commit()
+        else:
+            print("Error: Failed to fetch data: ", query.lastError().text())    # TODO: To show this to user.
+        query.finish()
+        query.clear()
+        return result
+
+
+
+class LocalDatabaseManager(LocalDatabaseModel):
+    def __init__(self, table_name: str = None, columns: dict = None):
+        # Initialize the parent class (LocalDatabaseModel)
+        super().__init__()
+
+        self.TABLE_NAME = table_name
+        self.COLUMNS = columns
+
+        # Create the table if it doesn't exist
+        self.create_table_if_not_exists(self.TABLE_NAME, self.COLUMNS)
+
+    def save(self, data: dict):    # ? data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}
+        # Use the insert_data method from the parent class
+        return self.insert_data(self.TABLE_NAME, data)
+
+    def update(self, data: dict, where: dict):    # ? data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}, where = {'id': 1}
+        # Use the update_data method from the parent class
+        return self.update_data(self.TABLE_NAME, data, where)
+
+    def remove(self, where: dict):    # ? where = {'id': 1}
+        # Use the delete_data method from the parent class
+        return self.delete_data(self.TABLE_NAME, where)
+
+    # * operator should be present after the column name in `where` dict.
+    def get(self, where: dict, columns: list = None):    # ? where = {'id =': 1}, columns = ['id', 'date', 'json_data']
+        if not columns:
+            columns = list(self.COLUMNS.keys())
+        # Use the select_data method from the parent class
+        return self.select_data(self.TABLE_NAME, columns, where)
+
+    def get_all(self, columns: list = None):    # ? columns = ['id', 'date', 'json_data']
+        if not columns:
+            columns = list(self.COLUMNS.keys())
+        # Use the select_all_data method from the parent class
+        return self.select_all_data(self.TABLE_NAME, columns)
+
+
+### * Usage:-
+# from config.settings import LocalDatabaseManager
+# with LocalDatabaseManager() as db_manager:
+    ## Perform database operations here
+    ## db_manager.save(data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})})
+    ## db_manager.update(data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}, where = {'id': 1})
+    ## db_manager.remove(where = {'id': 1})
+    ## db_manager.get(where = {'id =': 1}, columns = ['id', 'date', 'json_data'])
+    ## db_manager.get_all(columns = ['id', 'date', 'json_data'])
+## Connection is automatically closed when you exit the 'with' block
+
+
+
+# * SQLITE_OPERATORS : list = ['=', '>', '<', '>=', '<=', '!=', '<>', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN', 'BETWEEN', 'NOT BETWEEN', 'IS', 'IS NOT', 'IS NULL', 'IS NOT NULL', 'REGEXP', 'NOT REGEXP', 'MATCH', 'NOT MATCH', 'GLOB', 'NOT GLOB', 'MATCH', 'NOT MATCH', 'REGEXP', 'NOT REGEXP', 'GLOB', 'NOT GLOB', 'IS', 'IS NOT', 'IS NULL']
 
 
 
