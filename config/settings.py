@@ -273,7 +273,7 @@ class LocalDatabaseManager(LocalDatabaseModel):
         # Create the table if it doesn't exist
         self.create_table_if_not_exists(self.TABLE_NAME, self.COLUMNS)
 
-    def save(self, data: dict):    # ? data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}
+    def create(self, data: dict):    # ? data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}
         # Use the insert_data method from the parent class
         return self.insert_data(self.TABLE_NAME, data)
 
@@ -281,7 +281,7 @@ class LocalDatabaseManager(LocalDatabaseModel):
         # Use the update_data method from the parent class
         return self.update_data(self.TABLE_NAME, data, where)
 
-    def remove(self, where: dict):    # ? where = {'id': 1}
+    def delete(self, where: dict):    # ? where = {'id': 1}
         # Use the delete_data method from the parent class
         return self.delete_data(self.TABLE_NAME, where)
 
@@ -303,9 +303,9 @@ class LocalDatabaseManager(LocalDatabaseModel):
 # from config.settings import LocalDatabaseManager
 # with LocalDatabaseManager() as db_manager:
     ## Perform database operations here
-    ## db_manager.save(data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})})
+    ## db_manager.create(data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})})
     ## db_manager.update(data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}, where = {'id': 1})
-    ## db_manager.remove(where = {'id': 1})
+    ## db_manager.delete(where = {'id': 1})
     ## db_manager.get(where = {'id =': 1}, columns = ['id', 'date', 'json_data'])
     ## db_manager.get_all(columns = ['id', 'date', 'json_data'])
 ## Connection is automatically closed when you exit the 'with' block

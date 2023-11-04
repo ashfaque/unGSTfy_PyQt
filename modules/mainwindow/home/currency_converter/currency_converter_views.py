@@ -143,6 +143,12 @@ class CurrencyConverterView(QtWidgets.QWidget):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
+        # Setting all the user interface elements to Enabled. They will be disabled when currency APIs are not available.
+        self.lineEdit_Currency_From.setDisabled(False)
+        self.lineEdit_Currency_To.setDisabled(False)
+        self.comboBox_Currency_From.setDisabled(False)
+        self.comboBox_Currency_To.setDisabled(False)
+
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
 
