@@ -9,7 +9,7 @@ class HomeController(HomeView):
         # ? self.main_window_controller = main_window_controller  # Store a reference to the MainWindowController
         super().__init__(parent=parent)
         self.setupSignals()
-        self.setupViews()
+        '''self.setupViews()'''    # * Disabled these lines as they are initializing all the views at once. Causing the app to slow down at startup.
 
     def setupSignals(self):
         self.pushButton_Calculate_Taxable_Value.clicked.connect(self.onPushButtonCalculateTaxableValueClicked)
@@ -17,6 +17,7 @@ class HomeController(HomeView):
         self.pushButton_Currency_Converter.clicked.connect(self.onPushButtonCurrencyConverterClicked)
         self.backButton.clicked.connect(self.backButtonClicked)
     
+    '''    # * Disabled these lines as they are initializing all the views at once. Causing the app to slow down at startup.
     def setupViews(self):
         self.taxableValueView = TaxableValueController(parent=self)
         self.stackedWidget.addWidget(self.taxableValueView)
@@ -26,17 +27,28 @@ class HomeController(HomeView):
 
         self.currencyConverterView = CurrencyConverterController(parent=self)
         self.stackedWidget.addWidget(self.currencyConverterView)
+    '''
+    # * NB: We are registering all the Controllers here at once. Therefore all their constructors `__init__()` are being called. Now all the controllers inherits their views class. Therefore, all the views are being initialized at once when the application loads. This is causing the app to slow down at startup. Therefore, we are disabling the above lines of code and initializing the views only when the user clicks on the respective buttons. This way, the views will be initialized only when the user clicks on the respective buttons. This will improve the startup time of the application.
 
 
     def onPushButtonCalculateTaxableValueClicked(self):
+        self.taxableValueView = TaxableValueController(parent=self)    # * Registered individual Controllers to stackedWidget when user clicks on their specified buttons. Causing the page to load when needed. Not like it used to all at a time and cauing slower startup when applicaiton launches.
+        self.stackedWidget.addWidget(self.taxableValueView)    # * Registered individual Controllers to stackedWidget when user clicks on their specified buttons. Causing the page to load when needed. Not like it used to all at a time and cauing slower startup when applicaiton launches.
+
         self.stackedWidget.setCurrentWidget(self.taxableValueView)
         self.backButton.setVisible(True)    # Show the "Back" button
 
     def onPushButtonCalculateGSTPercentClicked(self):
+        self.gstPercentView = GSTPercentController(parent=self)    # * Registered individual Controllers to stackedWidget when user clicks on their specified buttons. Causing the page to load when needed. Not like it used to all at a time and cauing slower startup when applicaiton launches.
+        self.stackedWidget.addWidget(self.gstPercentView)    # * Registered individual Controllers to stackedWidget when user clicks on their specified buttons. Causing the page to load when needed. Not like it used to all at a time and cauing slower startup when applicaiton launches.
+
         self.stackedWidget.setCurrentWidget(self.gstPercentView)
         self.backButton.setVisible(True)    # Show the "Back" button
         
     def onPushButtonCurrencyConverterClicked(self):
+        self.currencyConverterView = CurrencyConverterController(parent=self)    # * Registered individual Controllers to stackedWidget when user clicks on their specified buttons. Causing the page to load when needed. Not like it used to all at a time and cauing slower startup when applicaiton launches.
+        self.stackedWidget.addWidget(self.currencyConverterView)    # * Registered individual Controllers to stackedWidget when user clicks on their specified buttons. Causing the page to load when needed. Not like it used to all at a time and cauing slower startup when applicaiton launches.
+
         self.stackedWidget.setCurrentWidget(self.currencyConverterView)
         self.backButton.setVisible(True)    # Show the "Back" button
 
