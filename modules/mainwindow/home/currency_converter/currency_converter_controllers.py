@@ -34,9 +34,11 @@ class CurrencyConverterController(CurrencyConverterView):
 
         # ? Inserting currencies list in ComboBoxes for users to select from.
         if currencies_list_of_dicts:
-            self.currency_display_name_to_code_dict = {item["display_name"]: item["code"] for item in currencies_list_of_dicts}
+            self.currency_display_name_to_code_dict = {item["display_name"]: item["code"] for item in currencies_list_of_dicts}    # ? Caching currency display name to code dict for calculation purpose later on.
             self.comboBox_Currency_From.addItems([item["display_name"] for item in currencies_list_of_dicts])
             self.comboBox_Currency_To.addItems([item["display_name"] for item in currencies_list_of_dicts])
+            self.comboBox_Currency_From.setCurrentIndex(0)
+            self.comboBox_Currency_To.setCurrentIndex(0)
 
         # ? ------------------------------------------------------------------------------------------------------ ? #
 
