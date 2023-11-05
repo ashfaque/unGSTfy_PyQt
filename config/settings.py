@@ -94,13 +94,19 @@ class LocalDatabaseManager:
         return cls._db
 
 
+    @classmethod
+    def close_connection(cls):
+        if cls._db is not None:
+            cls._db.close()
+
+
 
 
 
 class LocalDatabaseModel:
     def __init__(self, table_name: str = None, columns: dict = None):
 
-        self.open_db_connection    # ? Initialize the database connection object.
+        self.db = self.open_db_connection()    # ? Initialize the database connection object.
 
         self.TABLE_NAME = table_name
         self.COLUMNS = columns
@@ -111,17 +117,19 @@ class LocalDatabaseModel:
 
     def __enter__(self):
         # self.db = LocalDatabaseManager.open_db_connection()
-        # return self
-        return self.open_db_connection
+        self.db = self.open_db_connection()
+        return self
 
 
     def __exit__(self, exc_type, exc_value, traceback):
+        pass    # ? Keep the connection open for other classes to use the same connection. It will be closed in the main.py when application is closed.
         # self.db.close()
-        self.close_db_connection()
+        # self.close_db_connection()
 
 
     def __del__(self):
-        self.close_db_connection()
+        pass    # ? Keep the connection open for other classes to use the same connection. It will be closed in the main.py when application is closed.
+        # self.close_db_connection()
 
 
     def __str__(self):
@@ -133,14 +141,13 @@ class LocalDatabaseModel:
 
 
     def open_db_connection(self):
-        self.db = LocalDatabaseManager.open_db_connection()
-        return self
+        return LocalDatabaseManager.open_db_connection()
 
 
-    def close_db_connection(self):
-        if self.db is not None:
-            self.db.close()
-            self.db = None
+    # def close_db_connection(self):
+    #     if self.db is not None:
+    #         self.db.close()
+    #         self.db = None
 
 
     # * ------------------------------ Database operations ------------------------------ * #

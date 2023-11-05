@@ -1,8 +1,10 @@
+import atexit
 import sys
 
 from PyQt6.QtWidgets import QApplication
 
 from modules.mainwindow.mainwindow_controllers import MainWindowController
+from config.settings import LocalDatabaseManager
 
 # TODO: Setup better DEBUG logging
 ''' Logging Starts '''
@@ -41,4 +43,5 @@ sys.excepthook = custom_exception_handler
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main_window_controller_obj = MainWindowController()
+    atexit.register(LocalDatabaseManager.close_connection)
     sys.exit(app.exec())
