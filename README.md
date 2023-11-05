@@ -9,9 +9,11 @@ This is the entry point of the application. Create an instance of `QApplication`
 - In another class create object of this controller.py class `MainWindowController` and invoke that screen to display.
 - If invoking for the first time in main.py invoke the mainwindow class, `MainWindowController` in it.
 
-- Never ever import any of your custom python modules in any of your [config/](config/) dir files.
+- **IMPORTANT:** Never ever import any of your custom python modules in any of your [config/](config/) dir files.
 
-Using Python Version: 3.10.11
+- Using Python Version: 3.10.11, then switched to 3.11.5.
+    - conda create -n gstenv python 3.11.5
+    - conda activate gstenv
 
 ### Pyinstaller
 

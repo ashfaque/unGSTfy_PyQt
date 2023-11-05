@@ -9,12 +9,17 @@ from config.settings import LocalDatabaseManager
 # TODO: Setup better DEBUG logging
 ''' Logging Starts '''
 
+import os
 import logging
 # Create a logger
 logger = logging.getLogger(__name__)
 
 # Create a file handler to log to a specific file
-log_file = 'debug.log'    # Set the desired log file path
+log_file = 'logs/debug.log'    # Set the desired log file path w.r.t the project root directory.
+
+if not os.path.exists(os.path.dirname(log_file)):
+    os.makedirs(os.path.dirname(log_file))
+
 file_handler = logging.FileHandler(log_file)
 
 # Create a formatter to specify the log message format

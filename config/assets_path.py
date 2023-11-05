@@ -1,8 +1,22 @@
-# Images path mapped with a variable here. So only needs to change at one place if path changes.
+# Assets path mapped with a variable here. So only needs to change at one place if path changes.
+
+import os
+import sys
 
 from PyQt6 import QtGui
 
-from utils.global_functions import assets_base_path_according_to_dev_or_exec
+
+def assets_base_path_according_to_dev_or_exec(assets_path: str):
+    if getattr(sys, 'frozen', False):
+        final_assets_path = os.path.join(sys._MEIPASS, assets_path)
+    else:
+        final_assets_path = assets_path
+    return final_assets_path
+
+
+
+# ******************** Assets Path Declarations ******************** #
+
 
 APP_LOGO_PATH = assets_base_path_according_to_dev_or_exec('assets/images/gst_logo.png')
 
@@ -12,6 +26,11 @@ FONTS = {
 }
 
 
+
+
+
+
+# ******************** Initialize Assets ******************** #
 
 def initialize_assets():
     for each_font_key, each_font_value in FONTS.items():

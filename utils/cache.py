@@ -1,1 +1,1 @@
-# You can use local sqlite3 db to cache data.
+# You can define variables here to cache data that you want to use in multiple modules.
