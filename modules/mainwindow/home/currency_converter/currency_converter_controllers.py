@@ -20,10 +20,11 @@ class CurrencyConverterController(CurrencyConverterView):
 
     def setupConversionData(self):
         # ? Preparing currencies list for users to select from.
-        currencies_list_of_dicts = CurrencyConverterCurrenciesListModel().get_all()
+        currency_converter_currency_list_obj = CurrencyConverterCurrenciesListModel()
+        currencies_list_of_dicts = currency_converter_currency_list_obj.get_all()
         if not currencies_list_of_dicts:
             api_response = api_request(API_CURRENCIES_LIST["url"], API_CURRENCIES_LIST["method"], API_CURRENCIES_LIST["params"])
-            currencies_list_of_dicts = CurrencyConverterCurrenciesListModel().serialize_response_data(api_response)
+            currencies_list_of_dicts = currency_converter_currency_list_obj.serialize_response_data(api_response)
             # if not api_response or not currencies_list_of_dicts:
             if not currencies_list_of_dicts:
                 self.label_Remaining_Monthly_Conversions_Text.setText(CURRENCY_CONVERT_CURRENCY_LIST_NOT_AVAILABLE_TEXT)
@@ -43,10 +44,11 @@ class CurrencyConverterController(CurrencyConverterView):
         # * ------------------------------------------------------------------------------------------------------ * #
 
         # ? Preparing exchange rates for users to convert currencies.
-        exchange_rates_list_of_dicts = CurrencyConverterExchangeRatesModel().get(where={'data_date': datetime.date.today()})    # datetime.datetime.now().date().isoformat()
+        currency_converter_exchange_rates_obj = CurrencyConverterExchangeRatesModel()
+        exchange_rates_list_of_dicts = currency_converter_exchange_rates_obj.get(where={'data_date': datetime.date.today()})    # datetime.datetime.now().date().isoformat()
         if not exchange_rates_list_of_dicts:
             api_response = api_request(API_LATEST_EXCHANGE_RATES["url"], API_LATEST_EXCHANGE_RATES["method"], API_LATEST_EXCHANGE_RATES["params"])
-            serialized_data = CurrencyConverterExchangeRatesModel().serialize_response_data(api_response)
+            serialized_data = currency_converter_exchange_rates_obj.serialize_response_data(api_response)
             if not serialized_data:
                 self.label_Remaining_Monthly_Conversions_Text.setText(CURRENCY_CONVERT_EXCHANGE_RATE_NOT_AVAILABLE_TEXT)
                 self.lineEdit_Currency_From.setDisabled(True)
@@ -138,7 +140,7 @@ class CurrencyConverterController(CurrencyConverterView):
         EUR_exchange_of_1_convert_from = self.today_exchange_rates_dict[convert_from_currency_code]    # ? <class 'float'> by default.
         EUR_exchange_of_1_convert_to = self.today_exchange_rates_dict[convert_to_currency_code]    # ? <class 'float'> by default.
 
-        if (sender == self.lineEdit_Currency_From and is_input_valid) or (sender == self.comboBox_Currency_From):
+        if (sender == self.lineEdit_Currency_From and is_input_valid) or (sender == self.comboBox_Currency_From and self.lineEdit_Currency_From.text()):
             convert_from_value = float(self.lineEdit_Currency_From.text())
             result_convert_to = (convert_from_value / EUR_exchange_of_1_convert_from) * EUR_exchange_of_1_convert_to
 
@@ -146,7 +148,7 @@ class CurrencyConverterController(CurrencyConverterView):
             self.lineEdit_Currency_To.setText(str(round(result_convert_to, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
             self.lineEdit_Currency_To.blockSignals(False)    # ? Unblock signals.
 
-        elif (sender == self.lineEdit_Currency_To and is_input_valid) or (sender == self.comboBox_Currency_To):
+        elif (sender == self.lineEdit_Currency_To and is_input_valid) or (sender == self.comboBox_Currency_To and self.lineEdit_Currency_To.text()):
             convert_to_value = float(self.lineEdit_Currency_To.text())
             result_convert_from = (convert_to_value / EUR_exchange_of_1_convert_to) * EUR_exchange_of_1_convert_from
 

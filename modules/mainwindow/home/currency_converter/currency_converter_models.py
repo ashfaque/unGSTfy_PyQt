@@ -1,10 +1,10 @@
 import datetime
 import json
 
-from config.settings import LocalDatabaseManager
+from config.settings import LocalDatabaseModel
 
 
-class CurrencyConverterCurrenciesListModel(LocalDatabaseManager):
+class CurrencyConverterCurrenciesListModel(LocalDatabaseModel):
     # Define table name and columns as class attributes
     TABLE_NAME = "currency_converter_currencies_list_tbl"
     COLUMNS = {    # Column `id` generated and set to auto-incremented by default. No need to define it here.
@@ -14,7 +14,7 @@ class CurrencyConverterCurrenciesListModel(LocalDatabaseManager):
     }
 
     def __init__(self):
-        # Initialize the parent class (LocalDatabaseManager)
+        # Initialize the parent class (LocalDatabaseModel)
         super().__init__(self.TABLE_NAME, self.COLUMNS)
 
     def serialize_response_data(self, data):
@@ -26,13 +26,17 @@ class CurrencyConverterCurrenciesListModel(LocalDatabaseManager):
         data = list(data.items())
         # data = [dict(zip(["code", "name", "display_name"], [item[0], item[1], f"{item[0]} ({item[1]})"])) for item in data]
         # self.create(data)
+        serialized_data = []
         for item in data:
-            self.create(dict(zip(["code", "name", "display_name"], [item[0], item[1], f"{item[0]} ({item[1]})"])))
-        return data
+            each_item_dict = dict(zip(["code", "name", "display_name"], [item[0], item[1], f"{item[0]} ({item[1]})"]))
+            serialized_data.append(each_item_dict)
+            self.create(each_item_dict)
+        # return data
+        return serialized_data
 
 
 
-class CurrencyConverterExchangeRatesModel(LocalDatabaseManager):
+class CurrencyConverterExchangeRatesModel(LocalDatabaseModel):
     # Define table name and columns as class attributes
     TABLE_NAME = "currency_converter_exchange_rates_tbl"
     COLUMNS = {    # Column `id` generated and set to auto-incremented by default. No need to define it here.
@@ -43,7 +47,7 @@ class CurrencyConverterExchangeRatesModel(LocalDatabaseManager):
     }
 
     def __init__(self):
-        # Initialize the parent class (LocalDatabaseManager)
+        # Initialize the parent class (LocalDatabaseModel)
         super().__init__(self.TABLE_NAME, self.COLUMNS)
 
     def serialize_response_data(self, data):
