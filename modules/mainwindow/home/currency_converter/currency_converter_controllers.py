@@ -9,16 +9,16 @@ from config.ui_element_names import (
     CURRENCY_CONVERT_CURRENCY_LIST_NOT_AVAILABLE_TEXT
     , CURRENCY_CONVERT_EXCHANGE_RATE_NOT_AVAILABLE_TEXT
 )
-from pprint import pprint
 
 
 class CurrencyConverterController(CurrencyConverterView):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
-        self.setupData()
+        self.setupConversionData()
         self.setupSignals()
 
-    def setupData(self):
+
+    def setupConversionData(self):
         # ? Preparing currencies list for users to select from.
         currencies_list_of_dicts = CurrencyConverterCurrenciesListModel().get_all()
         if not currencies_list_of_dicts:
@@ -37,10 +37,10 @@ class CurrencyConverterController(CurrencyConverterView):
             self.currency_display_name_to_code_dict = {item["display_name"]: item["code"] for item in currencies_list_of_dicts}    # ? Caching currency display name to code dict for calculation purpose later on.
             self.comboBox_Currency_From.addItems([item["display_name"] for item in currencies_list_of_dicts])
             self.comboBox_Currency_To.addItems([item["display_name"] for item in currencies_list_of_dicts])
-            self.comboBox_Currency_From.setCurrentIndex(0)
-            self.comboBox_Currency_To.setCurrentIndex(0)
+            self.comboBox_Currency_From.setCurrentIndex(0)    # ? Setting default value for `ComboBox Convert From` to first item in the list.
+            self.comboBox_Currency_To.setCurrentIndex(0)    # ? Setting default value for `ComboBox Convert To` to first item in the list.
 
-        # ? ------------------------------------------------------------------------------------------------------ ? #
+        # * ------------------------------------------------------------------------------------------------------ * #
 
         # ? Preparing exchange rates for users to convert currencies.
         exchange_rates_list_of_dicts = CurrencyConverterExchangeRatesModel().get(where={'data_date': datetime.date.today()})    # datetime.datetime.now().date().isoformat()
@@ -58,12 +58,14 @@ class CurrencyConverterController(CurrencyConverterView):
         exchange_rates_list_of_dicts[0]['data_json'] = eval(exchange_rates_list_of_dicts[0]['data_json'])
         self.today_exchange_rates_dict = exchange_rates_list_of_dicts[0]['data_json']    # ? Caching today's exchange rates in a dict var for calculation purpose later on.
 
+
     def setupSignals(self):
-        self.lineEdit_Currency_From.textChanged.connect(self.validateInput)
-        self.lineEdit_Currency_To.textChanged.connect(self.validateInput)
+        # self.lineEdit_Currency_From.textChanged.connect(self.validateInput)    # ? Validating input in showResult(), if validateInput() returns True. It will perform calcuations.
+        # self.lineEdit_Currency_To.textChanged.connect(self.validateInput)    # ? Validating input in showResult(), if validateInput() returns True. It will perform calcuations.
 
         self.lineEdit_Currency_From.textChanged.connect(self.showResult)
         self.lineEdit_Currency_To.textChanged.connect(self.showResult)
+
 
     def validateInput(self, text):
         cursor_position = self.sender().cursorPosition()
@@ -71,7 +73,8 @@ class CurrencyConverterController(CurrencyConverterView):
         if text == "" or text == ".":
             self.sender().setText(text)
             self.sender().setCursorPosition(cursor_position)
-            return
+            # return
+            return False
         try:
             value = Decimal(text)
             if value < 0:
@@ -86,20 +89,35 @@ class CurrencyConverterController(CurrencyConverterView):
             else:
                 self.sender().setText("{:.0f}".format(value))
             self.sender().setCursorPosition(cursor_position)
+            return True
         except (ValueError, DecimalException) as ex:
             self.sender().setText(self.sender().text()[:-1])
             self.sender().setCursorPosition(cursor_position - 1)
+            return False
 
-    # TODO : see logic.md for more details.
+
     def showResult(self, text):
-        # TODO: Also handle logic where user haven't changed `ComboBox Convert From / To` and enters value in `LineEdit From / To` field.
+        is_input_valid = self.validateInput(text)    # ? Validating input, before performing calcuations.
+
         sender = self.sender()    # Get the sender (the lineEdit that emitted the signal)
 
-        # TODO: Use, self.currency_display_name_to_code_dict, to get the currency code from the currency display name.
-        # TODO: self.today_exchange_rates_dict for cached today data.
-        if sender == self.lineEdit_Currency_From:
-            # self.lineEdit_Currency_To.setText('123')
-            ...
-        elif sender == self.lineEdit_Currency_To:
-            # self.lineEdit_Currency_From.setText('456')
-            ...
+        convert_from_currency_code = self.currency_display_name_to_code_dict[self.comboBox_Currency_From.currentText()]
+        convert_to_currency_code = self.currency_display_name_to_code_dict[self.comboBox_Currency_To.currentText()]
+        EUR_exchange_of_1_convert_from = self.today_exchange_rates_dict[convert_from_currency_code]    # ? <class 'float'> by default.
+        EUR_exchange_of_1_convert_to = self.today_exchange_rates_dict[convert_to_currency_code]    # ? <class 'float'> by default.
+
+        if sender == self.lineEdit_Currency_From and is_input_valid:
+            convert_from_value = float(text)
+            result_convert_to = (convert_from_value / EUR_exchange_of_1_convert_from) * EUR_exchange_of_1_convert_to
+
+            self.lineEdit_Currency_To.blockSignals(True)    # ? Block signals to prevent infinite loop.
+            self.lineEdit_Currency_To.setText(str(round(result_convert_to, 2)))
+            self.lineEdit_Currency_To.blockSignals(False)    # ? Unblock signals.
+        elif sender == self.lineEdit_Currency_To and is_input_valid:
+            convert_to_value = float(text)
+            result_convert_from = (convert_to_value / EUR_exchange_of_1_convert_to) * EUR_exchange_of_1_convert_from
+
+            self.lineEdit_Currency_From.blockSignals(True)    # ? Block signals to prevent infinite loop.
+            self.lineEdit_Currency_From.setText(str(round(result_convert_from, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
+            self.lineEdit_Currency_From.blockSignals(False)    # ? Unblock signals.
+
