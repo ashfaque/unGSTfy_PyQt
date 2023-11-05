@@ -58,7 +58,7 @@ class AppSettingsManager:
 
 
 
-
+# ? https://realpython.com/python-pyqt-database/
 
 class LocalDatabaseManager:
     _db = None    # Class-level attribute to store the database connection
