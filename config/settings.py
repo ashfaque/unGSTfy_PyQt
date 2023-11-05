@@ -218,7 +218,7 @@ class LocalDatabaseModel:
         for key, value in where.items():
             query.bindValue(f":{key}", str(value))
 
-        print('query.exec()---> ', query.lastQuery())
+        # print('query.exec()---> ', query.lastQuery())
 
         result = []
         if query.exec():

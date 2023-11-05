@@ -38,7 +38,7 @@ class CurrencyConverterExchangeRatesModel(LocalDatabaseManager):
     COLUMNS = {    # Column `id` generated and set to auto-incremented by default. No need to define it here.
         # 'date': ['TEXT', 'NOT NULL', 'DEFAULT CURRENT_TIMESTAMP']
         # 'data_date': ['DATE', 'NULL', 'DEFAULT CURRENT_DATE']    # or, you can use: 'DEFAULT (date("now"))'
-        'data_date': ['DATE', 'NULL']
+        'data_date': ['DATE', 'NULL']    # ? One data per day.
         , 'data_json': ['TEXT', 'NOT NULL', 'DEFAULT "{}"']
     }
 
@@ -53,8 +53,8 @@ class CurrencyConverterExchangeRatesModel(LocalDatabaseManager):
             return
         data_date = data["date"]
         data_json = json.dumps(data["rates"])
-        self.create({
+        self.create(data := {
             'data_date': data_date
             , 'data_json': data_json
         })
-        return data_date, data_json
+        return data

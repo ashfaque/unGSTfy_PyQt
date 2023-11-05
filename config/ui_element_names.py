@@ -54,3 +54,4 @@ CURRENCY_CONVERT_TO_PLACEHOLDER_TEXT = 'Convert To'
 CURRENCY_CONVERT_REMAINING_MONTHLY_CONVERSIONS_TEXT = 'Remaining Monthly Conversions: '
 
 CURRENCY_CONVERT_CURRENCY_LIST_NOT_AVAILABLE_TEXT = 'Currency list not available. Please try again later.'
+CURRENCY_CONVERT_EXCHANGE_RATE_NOT_AVAILABLE_TEXT = 'Exchange rate not available. Please try again later.'
