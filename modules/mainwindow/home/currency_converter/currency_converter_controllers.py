@@ -66,6 +66,9 @@ class CurrencyConverterController(CurrencyConverterView):
         self.lineEdit_Currency_From.textChanged.connect(self.showResult)
         self.lineEdit_Currency_To.textChanged.connect(self.showResult)
 
+        self.comboBox_Currency_From.currentTextChanged.connect(self.showResult)    # ? Also added signal for ComboBox, as it is also used to select currency to show result.
+        self.comboBox_Currency_To.currentTextChanged.connect(self.showResult)    # ? Also added signal for ComboBox, as it is also used to select currency to show result.
+
 
     def validateInput(self, text):
         cursor_position = self.sender().cursorPosition()
@@ -95,7 +98,7 @@ class CurrencyConverterController(CurrencyConverterView):
             self.sender().setCursorPosition(cursor_position - 1)
             return False
 
-
+    '''    # ? Commenting this code as it only works when lineedit is updated by the user, but what if the data in combo box is changed by the user, then this code will not work.
     def showResult(self, text):
         is_input_valid = self.validateInput(text)    # ? Validating input, before performing calcuations.
 
@@ -121,4 +124,32 @@ class CurrencyConverterController(CurrencyConverterView):
             self.lineEdit_Currency_From.blockSignals(True)    # ? Block signals to prevent infinite loop.
             self.lineEdit_Currency_From.setText(str(round(result_convert_from, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
             self.lineEdit_Currency_From.blockSignals(False)    # ? Unblock signals.
+    '''
 
+    def showResult(self, text):
+        sender = self.sender()    # Get the sender (the lineEdit that emitted the signal)
+
+        # ? Validating input, before performing calcuations only for LineEdits. As when user choose from ComboBoxes the inputs of LineEdits are already validated.
+        if sender == self.lineEdit_Currency_From or sender == self.lineEdit_Currency_To:
+            is_input_valid = self.validateInput(text)
+
+        convert_from_currency_code = self.currency_display_name_to_code_dict[self.comboBox_Currency_From.currentText()]
+        convert_to_currency_code = self.currency_display_name_to_code_dict[self.comboBox_Currency_To.currentText()]
+        EUR_exchange_of_1_convert_from = self.today_exchange_rates_dict[convert_from_currency_code]    # ? <class 'float'> by default.
+        EUR_exchange_of_1_convert_to = self.today_exchange_rates_dict[convert_to_currency_code]    # ? <class 'float'> by default.
+
+        if (sender == self.lineEdit_Currency_From and is_input_valid) or (sender == self.comboBox_Currency_From):
+            convert_from_value = float(self.lineEdit_Currency_From.text())
+            result_convert_to = (convert_from_value / EUR_exchange_of_1_convert_from) * EUR_exchange_of_1_convert_to
+
+            self.lineEdit_Currency_To.blockSignals(True)    # ? Block signals to prevent infinite loop.
+            self.lineEdit_Currency_To.setText(str(round(result_convert_to, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
+            self.lineEdit_Currency_To.blockSignals(False)    # ? Unblock signals.
+
+        elif (sender == self.lineEdit_Currency_To and is_input_valid) or (sender == self.comboBox_Currency_To):
+            convert_to_value = float(self.lineEdit_Currency_To.text())
+            result_convert_from = (convert_to_value / EUR_exchange_of_1_convert_to) * EUR_exchange_of_1_convert_from
+
+            self.lineEdit_Currency_From.blockSignals(True)    # ? Block signals to prevent infinite loop.
+            self.lineEdit_Currency_From.setText(str(round(result_convert_from, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
+            self.lineEdit_Currency_From.blockSignals(False)    # ? Unblock signals.
