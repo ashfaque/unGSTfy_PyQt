@@ -111,8 +111,9 @@ class CurrencyConverterController(CurrencyConverterView):
             result_convert_to = (convert_from_value / EUR_exchange_of_1_convert_from) * EUR_exchange_of_1_convert_to
 
             self.lineEdit_Currency_To.blockSignals(True)    # ? Block signals to prevent infinite loop.
-            self.lineEdit_Currency_To.setText(str(round(result_convert_to, 2)))
+            self.lineEdit_Currency_To.setText(str(round(result_convert_to, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
             self.lineEdit_Currency_To.blockSignals(False)    # ? Unblock signals.
+
         elif sender == self.lineEdit_Currency_To and is_input_valid:
             convert_to_value = float(text)
             result_convert_from = (convert_to_value / EUR_exchange_of_1_convert_to) * EUR_exchange_of_1_convert_from
