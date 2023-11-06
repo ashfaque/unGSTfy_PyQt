@@ -1,9 +1,15 @@
 import sys
 import requests
 
+from PyQt6 import QtWidgets
+
 
 def is_frozen_executable():
     return getattr(sys, 'frozen', False)
+
+
+def get_primary_screen_geometry():
+    return QtWidgets.QApplication.primaryScreen().availableGeometry()
 
 
 def api_request(url: str, method: str, params: dict):

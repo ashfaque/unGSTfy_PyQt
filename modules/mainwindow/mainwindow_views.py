@@ -2,6 +2,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from utils.global_functions import get_primary_screen_geometry
 from config.ui_element_names import (
     APP_NAME
     , MENU_BAR_MENU_NAME
@@ -22,7 +23,18 @@ class MainWindowView(QtWidgets.QMainWindow):
 
     def setupUi(self):
         self.setObjectName("MainWindow")
-        self.resize(715, 453)    # TODO: Dynamic size according to the main monitor size. Also for fonts as well.
+
+        main_screen_resolution = get_primary_screen_geometry()
+        application_window_size = main_screen_resolution.size() * 0.6    # TODO: Dynamic size according to the main monitor size. 60% of the main monitor size.
+        self.setGeometry(0, 0, application_window_size.width(), application_window_size.height())    # Set the window size
+        self.move(
+                # floor((main_screen_resolution.width() - self.width()) / 2)
+                # , floor((main_screen_resolution.height() - self.height()) / 2)
+                (main_screen_resolution.width() - self.width()) // 2
+                , (main_screen_resolution.height() - self.height()) // 2
+        )    # Center the window on the screen
+
+        # self.resize(715, 453)    # TODO: Dynamic size according to the main monitor size. Also for fonts as well.
 
         # self.centralwidget = QtWidgets.QWidget(parent=self)
         self.stackedcentralwidget = QtWidgets.QStackedWidget(parent=self)
