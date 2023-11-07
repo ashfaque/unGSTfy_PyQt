@@ -1,7 +1,8 @@
+import os
 import sys
-import requests
 
-from PyQt6 import QtWidgets
+import requests
+from PyQt6 import QtWidgets, QtCore
 
 
 def is_frozen_executable():
@@ -18,3 +19,12 @@ def api_request(url: str, method: str, params: dict):
         return response.json()
     else:
         return None    # TODO: Show error message to user. Where this function is called, handle the error.
+
+
+# ? Get the writable location for application data, platform independent.
+def get_app_data_dir():
+    if is_frozen_executable():
+        return QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
+    else:    # If development environment.
+        return os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+

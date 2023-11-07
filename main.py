@@ -6,42 +6,7 @@ from PyQt6.QtWidgets import QApplication
 from modules.mainwindow.mainwindow_controllers import MainWindowController
 from config.settings import LocalDatabaseManager
 
-# TODO: Setup better DEBUG logging
-''' Logging Starts '''
-
-import os
-import logging
-# Create a logger
-logger = logging.getLogger(__name__)
-
-# Create a file handler to log to a specific file
-log_file = 'logs/debug.log'    # Set the desired log file path w.r.t the project root directory.
-
-if not os.path.exists(os.path.dirname(log_file)):
-    os.makedirs(os.path.dirname(log_file))
-
-file_handler = logging.FileHandler(log_file)
-
-# Create a formatter to specify the log message format
-formatter = logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s')
-file_handler.setFormatter(formatter)
-
-# Set the logger level (adjust as needed)
-logger.setLevel(logging.DEBUG)
-
-# Add the file handler to the logger
-logger.addHandler(file_handler)
-
-
-def custom_exception_handler(exc_type, exc_value, exc_traceback):
-    logger = logging.getLogger(__name__)    # You can customize the logger name.
-    print(f"Uncaught exception: {exc_type}, {exc_value}")
-    logger.error("Uncaught exception: ", exc_info=(exc_type, exc_value, exc_traceback))
-
-# Set the custom exception handler globally.
-sys.excepthook = custom_exception_handler
-
-''' Logging Ends '''
+from utils import app_logging    # Setup logging for the entire application.
 
 
 

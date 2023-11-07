@@ -5,7 +5,7 @@ import sys
 from PyQt6 import QtCore, QtSql
 
 from config.ui_element_names import APP_NAME
-from utils.global_functions import is_frozen_executable
+from utils.global_functions import get_app_data_dir
 
 
 class AppSettingsManager:
@@ -13,11 +13,7 @@ class AppSettingsManager:
         self.app_name = APP_NAME
         # self.settings_dir = os.path.join(os.getenv("APPDATA"), app_name)
 
-        # ? Get the writable location for application data, platform independent.
-        if is_frozen_executable():
-            self.settings_dir = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
-        else:    # If development environment.
-            self.settings_dir = os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+        self.settings_dir = get_app_data_dir()    # ? Get the writable location for application data, platform independent.
 
         # ? Create the directory if it doesn't exist.
         if not os.path.exists(self.settings_dir):
@@ -68,11 +64,7 @@ class LocalDatabaseManager:
         # app_name = APP_NAME
         # local_db_dir = os.path.join(os.getenv("APPDATA"), app_name)
 
-        # ? Get the writable location for application data, platform independent.
-        if is_frozen_executable():
-            local_db_dir = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
-        else:    # If development environment.
-            local_db_dir = os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+        local_db_dir = get_app_data_dir()    # ? Get the writable location for application data, platform independent.
 
         # ? Create the directory if it doesn't exist.
         if not os.path.exists(local_db_dir):

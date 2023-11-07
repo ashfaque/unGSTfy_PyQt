@@ -34,7 +34,7 @@ class MainWindowView(QtWidgets.QMainWindow):
                 , (main_screen_resolution.height() - self.height()) // 2
         )    # Center the window on the screen
 
-        # self.resize(715, 453)    # TODO: Dynamic size according to the main monitor size. Also for fonts as well.
+        # self.resize(715, 453)
 
         # self.centralwidget = QtWidgets.QWidget(parent=self)
         self.stackedcentralwidget = QtWidgets.QStackedWidget(parent=self)
