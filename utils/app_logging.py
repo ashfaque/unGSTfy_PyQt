@@ -2,8 +2,8 @@ import os
 import sys
 
 from AshLogger import AshLogger
-from utils.global_functions import get_app_data_dir
 from config.constants import LOG_FILE_SIZE
+from config.settings import get_app_data_dir
 
 
 
@@ -24,6 +24,15 @@ def custom_exception_handler(exc_type, exc_value, exc_traceback):
 
 # Set the custom exception handler globally.
 sys.excepthook = custom_exception_handler
+
+
+
+# Utility function to trigger a manual exception and log it.
+def trigger_manual_exception_and_log_it(exception_msg: str):
+    try:
+        raise Exception(str(exception_msg))
+    except Exception as ex:
+        custom_exception_handler(type(ex), ex, ex.__traceback__)
 
 
 

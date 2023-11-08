@@ -5,7 +5,19 @@ import sys
 from PyQt6 import QtCore, QtSql
 
 from config.ui_element_names import APP_NAME
-from utils.global_functions import get_app_data_dir
+from config.constants import INI_SETTINGS_FILE_NAME, DB_FILE_NAME
+from utils.app_logging import trigger_manual_exception_and_log_it
+
+
+# ? Get the writable location for application data, platform independent.
+def get_app_data_dir():    # Declared this function here to avoid circular import with utils/global_functions.py
+    if getattr(sys, 'frozen', False):
+        return QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
+    else:    # If development environment.
+        return os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+
+
+
 
 
 class AppSettingsManager:
@@ -20,7 +32,7 @@ class AppSettingsManager:
             os.makedirs(self.settings_dir)
 
         # ? Define the settings file path.
-        self.settings_file_path = f"{self.settings_dir}/unGSTfy_data.ini"    # TODO: Global variable defined in config/constants.py
+        self.settings_file_path = f"{self.settings_dir}/{INI_SETTINGS_FILE_NAME}.ini"
 
         # Initialize QSettings with the custom location
         self.settings = QtCore.QSettings(self.settings_file_path, QtCore.QSettings.Format.IniFormat)
@@ -71,7 +83,7 @@ class LocalDatabaseManager:
             os.makedirs(local_db_dir)
 
         # ? Define the settings file path.
-        db_file_path = f"{local_db_dir}/unGSTfy_db.db"    # TODO: Global variable defined in config/constants.py or .sqlite3
+        db_file_path = f"{local_db_dir}/{DB_FILE_NAME}.db"
 
 
         if cls._db is None:
@@ -80,9 +92,9 @@ class LocalDatabaseManager:
             cls._db.setDatabaseName(db_file_path)
 
             if not cls._db.open():
-                print("Error: Could not connect to the database: ", cls._db.lastError().text())    # TODO: To show this to user.
-                # self.label.setText("Failed to connect database")
-                sys.exit(1)    # TODO: Is this required?
+                # print("Error: Could not connect to the database: ", cls._db.lastError().text())
+                trigger_manual_exception_and_log_it("Error: Could not connect to the database: " + cls._db.lastError().text())
+                sys.exit(1)    # ? Closing the application.
         return cls._db
 
 

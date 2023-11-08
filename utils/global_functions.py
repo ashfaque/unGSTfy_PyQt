@@ -21,10 +21,14 @@ def api_request(url: str, method: str, params: dict):
         return None    # TODO: Show error message to user. Where this function is called, handle the error.
 
 
-# ? Get the writable location for application data, platform independent.
-def get_app_data_dir():
-    if is_frozen_executable():
-        return QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
-    else:    # If development environment.
-        return os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+# Some utility functions defined here.
+'''
 
+from config.settings import get_app_data_dir
+_ = get_app_data_dir()
+
+
+from utils.app_logging import trigger_manual_exception_and_log_it
+trigger_manual_exception_and_log_it("This is a test exception message.")
+
+'''
