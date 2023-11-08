@@ -360,14 +360,14 @@ class LocalDatabaseModel:
         if is_frozen_executable():
             self.local_db_dir = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
         else:    # If development environment.
-            self.local_db_dir = os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+            self.local_db_dir = os.getcwd() + "/_temp"    # Pending: Global variable defined in config/constants.py
 
         # ? Create the directory if it doesn't exist.
         if not os.path.exists(self.local_db_dir):
             os.makedirs(self.local_db_dir)
 
         # ? Define the settings file path.
-        self.db_file_path = f"{self.local_db_dir}/unGSTfy_db.db"    # TODO: Global variable defined in config/constants.py or .sqlite3
+        self.db_file_path = f"{self.local_db_dir}/unGSTfy_db.db"    # Pending: Global variable defined in config/constants.py or .sqlite3
 
         self.db = None    # ? Initialize the database connection object as None.
 
@@ -403,7 +403,7 @@ class LocalDatabaseModel:
         self.db.setDatabaseName(self.db_file_path)
 
         if not self.db.open():
-            print("Error: Could not connect to the database: ", self.db.lastError().text())    # TODO: To show this to user.
+            print("Error: Could not connect to the database: ", self.db.lastError().text())    # Pending: To show this to user.
             # self.label.setText("Failed to connect database")
             sys.exit(1)
 
@@ -422,7 +422,7 @@ class LocalDatabaseModel:
         ''' + ', '.join([f"{column_name} {' '.join(column_attributes)}" for column_name, column_attributes in columns.items()]) + ')'
 
         if not query.exec(query_to_execute):
-            print("Error: Failed to create table", query.lastError().text())    # TODO: To show this to user.
+            print("Error: Failed to create table", query.lastError().text())    # Pending: To show this to user.
         else:   # If table created successfully.
             self.db.commit()
 
@@ -431,7 +431,7 @@ class LocalDatabaseModel:
         # self.db.close()
 
 
-    # TODO: Implement alter table method, if anything in column names or attributes changes.
+    # Pending: Implement alter table method, if anything in column names or attributes changes.
 
     def insert_data(self, table_name: str, data: dict):    # ? eg., data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}
         query = QtSql.QSqlQuery()
@@ -450,7 +450,7 @@ class LocalDatabaseModel:
         if query.exec():
             self.db.commit()
         else:
-            print("Error: Failed to insert data: ", query.lastError().text())    # TODO: To show this to user.
+            print("Error: Failed to insert data: ", query.lastError().text())    # Pending: To show this to user.
         query.finish()
         query.clear()
 
@@ -472,7 +472,7 @@ class LocalDatabaseModel:
         if query.exec():
             self.db.commit()
         else:
-            print("Error: Failed to update data: ", query.lastError().text())    # TODO: To show this to user.
+            print("Error: Failed to update data: ", query.lastError().text())    # Pending: To show this to user.
         query.finish()
         query.clear()
 
@@ -491,7 +491,7 @@ class LocalDatabaseModel:
         if query.exec():
             self.db.commit()
         else:
-            print("Error: Failed to delete data: ", query.lastError().text())    # TODO: To show this to user.
+            print("Error: Failed to delete data: ", query.lastError().text())    # Pending: To show this to user.
         query.finish()
         query.clear()
 
@@ -505,7 +505,7 @@ class LocalDatabaseModel:
                     {table_name}
                 WHERE
                     {', '.join([f"{key} = :{key}" for key in where.keys()])}
-        '''    # TODO: Conditional operators needs to be implemented. along with date(data_date) etc.
+        '''    # Pending: Conditional operators needs to be implemented. along with date(data_date) etc.
 
         query.prepare(query_to_execute)
         for key, value in where.items():
@@ -523,7 +523,7 @@ class LocalDatabaseModel:
                 # result.append([query.value(i) for i in range(len(columns))])    # [query.value(0), query.value(1), query.value(2)]
             self.db.commit()
         else:
-            print("Error: Failed to fetch data: ", query.lastError().text())    # TODO: To show this to user.
+            print("Error: Failed to fetch data: ", query.lastError().text())    # Pending: To show this to user.
         query.finish()
         query.clear()
         return result
@@ -548,7 +548,7 @@ class LocalDatabaseModel:
                 result.append(row)    # [{column1: value1, column2: value2}, {column1: value1, column2: value2}, ...]
             self.db.commit()
         else:
-            print("Error: Failed to fetch data: ", query.lastError().text())    # TODO: To show this to user.
+            print("Error: Failed to fetch data: ", query.lastError().text())    # Pending: To show this to user.
         query.finish()
         query.clear()
         return result
