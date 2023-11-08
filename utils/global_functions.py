@@ -24,7 +24,7 @@ def api_request(url: str, method: str, params: dict):
 # Some utility functions defined here.
 '''
 
-from config.settings import get_app_data_dir
+from utils.app_logging import get_app_data_dir
 _ = get_app_data_dir()
 
 

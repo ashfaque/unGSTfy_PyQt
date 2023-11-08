@@ -2,8 +2,16 @@ import os
 import sys
 
 from AshLogger import AshLogger
+from PyQt6 import QtCore
 from config.constants import LOG_FILE_SIZE
-from config.settings import get_app_data_dir
+
+
+# ? Get the writable location for application data, platform independent.
+def get_app_data_dir():    # Declared this function here to avoid circular import with utils/global_functions.py
+    if getattr(sys, 'frozen', False):
+        return QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
+    else:    # If development environment.
+        return os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
 
 
 

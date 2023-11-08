@@ -6,17 +6,7 @@ from PyQt6 import QtCore, QtSql
 
 from config.ui_element_names import APP_NAME
 from config.constants import INI_SETTINGS_FILE_NAME, DB_FILE_NAME
-from utils.app_logging import trigger_manual_exception_and_log_it
-
-
-# ? Get the writable location for application data, platform independent.
-def get_app_data_dir():    # Declared this function here to avoid circular import with utils/global_functions.py
-    if getattr(sys, 'frozen', False):
-        return QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
-    else:    # If development environment.
-        return os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
-
-
+from utils.app_logging import trigger_manual_exception_and_log_it, get_app_data_dir
 
 
 
