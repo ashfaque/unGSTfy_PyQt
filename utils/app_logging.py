@@ -28,11 +28,14 @@ sys.excepthook = custom_exception_handler
 
 
 # Utility function to trigger a manual exception and log it.
-def trigger_manual_exception_and_log_it(exception_msg: str):
+def trigger_manual_exception_and_log_it(exception_msg: str, close_app: bool = False):
     try:
         raise Exception(str(exception_msg))
     except Exception as ex:
         custom_exception_handler(type(ex), ex, ex.__traceback__)
+    finally:
+        if close_app:
+            sys.exit(1)
 
 
 
