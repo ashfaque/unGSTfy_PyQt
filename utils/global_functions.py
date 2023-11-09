@@ -2,7 +2,7 @@ import os
 import sys
 
 import requests
-from PyQt6 import QtWidgets, QtCore
+from PyQt6 import QtWidgets
 
 
 def is_frozen_executable():
@@ -24,11 +24,11 @@ def api_request(url: str, method: str, params: dict):
 # Some utility functions defined here.
 '''
 
-from utils.app_logging import get_app_data_dir
+from config.app_logging import get_app_data_dir
 _ = get_app_data_dir()
 
 
-from utils.app_logging import trigger_manual_exception_and_log_it
+from config.app_logging import trigger_manual_exception_and_log_it
 trigger_manual_exception_and_log_it("This is a test exception message.")
 
 '''

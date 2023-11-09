@@ -6,7 +6,7 @@ from PyQt6 import QtCore, QtSql
 
 from config.ui_element_names import APP_NAME
 from config.constants import INI_SETTINGS_FILE_NAME, DB_FILE_NAME
-from utils.app_logging import trigger_manual_exception_and_log_it, get_app_data_dir
+from config.app_logging import trigger_manual_exception_and_log_it, get_app_data_dir
 
 
 
