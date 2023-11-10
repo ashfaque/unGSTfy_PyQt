@@ -35,6 +35,7 @@ pefile==2023.2.7
 pyinstaller==6.1.0
 pyinstaller-hooks-contrib==2023.10
 pywin32-ctypes==0.2.2
+Pillow==10.1.0    # For macOS auto .ico to .icns conversion when making executable with pyinstaller.
 
 
 ## Requests
