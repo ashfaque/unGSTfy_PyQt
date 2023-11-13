@@ -2,7 +2,7 @@
 
 from PyQt6 import QtWidgets
 
-from modules.mainwindow.mainwindow_views import MainWindowView
+from modules.mainwindow.mainwindow_views import MainWindowView, CustomExitDialog
 from modules.mainwindow.home.home_controllers import HomeController
 from modules.mainwindow.about.about_controllers import AboutDialogController
 from config.assets_path import initialize_assets
@@ -57,3 +57,15 @@ class MainWindowController(MainWindowView):
             event.accept()
         else:
             event.ignore()
+
+    '''
+    # To change the style of the exit dialog.
+    def closeEvent(self, event):
+        custom_dialog = CustomExitDialog()
+        response = custom_dialog.exec()
+
+        if response == QtWidgets.QDialog.DialogCode.Accepted:
+            event.accept()
+        else:
+            event.ignore()
+    '''

@@ -13,6 +13,17 @@ def get_primary_screen_geometry():
     return QtWidgets.QApplication.primaryScreen().availableGeometry()
 
 
+def get_custom_geometry_wrt_primary_screen(percent: float):
+    '''
+    Usage:
+    from utils.global_functions import get_custom_geometry_wrt_primary_screen
+    custom_geometry = get_custom_geometry_wrt_primary_screen(0.2)
+    # custom_geometry.width() and custom_geometry.height()
+    '''
+    main_screen_resolution = get_primary_screen_geometry()
+    return main_screen_resolution.size() * percent
+
+
 def api_request(url: str, method: str, params: dict):
     response = requests.request(method, url, params=params)
     if response.status_code == 200:

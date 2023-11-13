@@ -2,7 +2,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from utils.global_functions import get_primary_screen_geometry
+from utils.global_functions import get_primary_screen_geometry, get_custom_geometry_wrt_primary_screen
 from config.ui_element_names import (
     APP_NAME
     , MENU_BAR_MENU_NAME
@@ -97,3 +97,76 @@ class MainWindowView(QtWidgets.QMainWindow):
         self.actionExit.setShortcut(_translate("MainWindow", MENU_BAR_MENU_ITEM_EXIT_SHORTCUT))
 
         self.actionAbout.setText(_translate("MainWindow", MENU_BAR_HELP_ITEM_ABOUT))
+
+
+
+
+
+class CustomExitDialog(QtWidgets.QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Exit")
+        self.setWindowFlag(QtCore.Qt.WindowType.WindowContextHelpButtonHint, False)    # Remove the "?" button
+
+        # Customize dialog size (e.g., 20% of the screen)
+        custom_geometry = get_custom_geometry_wrt_primary_screen(0.2)
+        self.setFixedSize(custom_geometry.width(), custom_geometry.height())
+
+        layout = QtWidgets.QHBoxLayout()  # Use a horizontal layout
+
+        label = QtWidgets.QLabel()
+        label.setText("Are you sure you want to exit?")
+        font = QtGui.QFont("Arial", 16)
+        label.setFont(font)
+        layout.addWidget(label)
+
+        # Add an icon on top
+        icon_label = QtWidgets.QLabel()
+        icon_pixmap = QtGui.QPixmap("icon.png")  # Replace with your icon image file
+        icon_label.setPixmap(icon_pixmap)
+        layout.addWidget(icon_label)
+
+        button_yes = QtWidgets.QPushButton("Yes")
+        button_no = QtWidgets.QPushButton("No")
+        font = QtGui.QFont("Arial", 13)
+        button_yes.setFont(font)
+        button_no.setFont(font)
+
+        # Customize button styles
+        button_yes.setStyleSheet(
+            """
+            QPushButton {
+                background-color: red;
+                border: 2px solid darkred;
+                border-radius: 10px;
+            }
+            QPushButton:hover {
+                background-color: darkred;
+            }
+            """
+        )
+
+        button_no.setStyleSheet(
+            """
+            QPushButton {
+                background-color: gray;
+                border: 2px solid blue;
+                border-radius: 10px;
+            }
+            QPushButton:hover {
+                background-color: lightgray;
+            }
+            """
+        )
+
+        layout.addWidget(button_no)  # Add "No" button first
+        layout.addWidget(button_yes)  # Add "Yes" button
+
+        # Connect buttons to slots for handling user actions (e.g., exiting)
+        button_yes.clicked.connect(self.accept)
+        button_no.clicked.connect(self.reject)
+
+        # Set the layout for the dialog
+        self.setLayout(layout)
+
