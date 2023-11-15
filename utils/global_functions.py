@@ -29,7 +29,7 @@ def api_request(url: str, method: str, params: dict):
     if response.status_code == 200:
         return response.json()
     else:
-        return None    # TODO: Show error message to user. Where this function is called, handle the error.
+        return None    # * PENDING: Show error message to user. Where this function is called, handle the error.
 
 
 # Some utility functions defined here.

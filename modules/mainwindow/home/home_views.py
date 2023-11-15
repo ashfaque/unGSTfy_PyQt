@@ -39,7 +39,7 @@ class HomeView(QtWidgets.QWidget):
         sizePolicy.setHeightForWidth(self.pushButton_Calculate_Taxable_Value.sizePolicy().hasHeightForWidth())
         self.pushButton_Calculate_Taxable_Value.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily(HOME_BUTTONS_FONT_FAMILY)    # TODO: Test with this font after making an executable on another system.
+        font.setFamily(HOME_BUTTONS_FONT_FAMILY)
         font.setPointSize(20)    # TODO: Dynamic font size according to the main monitor size.
         self.pushButton_Calculate_Taxable_Value.setFont(font)
         self.pushButton_Calculate_Taxable_Value.setObjectName("pushButton_Calculate_Taxable_Value")
@@ -63,7 +63,7 @@ class HomeView(QtWidgets.QWidget):
         sizePolicy.setHeightForWidth(self.pushButton_Calculate_GST_Percent.sizePolicy().hasHeightForWidth())
         self.pushButton_Calculate_GST_Percent.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily(HOME_BUTTONS_FONT_FAMILY)    # TODO: Test with this font after making an executable on another system.
+        font.setFamily(HOME_BUTTONS_FONT_FAMILY)
         font.setPointSize(20)    # TODO: Dynamic font size according to the main monitor size.
         self.pushButton_Calculate_GST_Percent.setFont(font)
         self.pushButton_Calculate_GST_Percent.setObjectName("pushButton_Calculate_GST_Percent")
@@ -87,7 +87,7 @@ class HomeView(QtWidgets.QWidget):
         sizePolicy.setHeightForWidth(self.pushButton_Currency_Converter.sizePolicy().hasHeightForWidth())
         self.pushButton_Currency_Converter.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily(HOME_BUTTONS_FONT_FAMILY)    # TODO: Test with this font after making an executable on another system.
+        font.setFamily(HOME_BUTTONS_FONT_FAMILY)
         font.setPointSize(20)    # TODO: Dynamic font size according to the main monitor size.
         self.pushButton_Currency_Converter.setFont(font)
         self.pushButton_Currency_Converter.setObjectName("pushButton_Currency_Converter")

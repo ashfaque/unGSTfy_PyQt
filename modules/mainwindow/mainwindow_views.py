@@ -14,6 +14,7 @@ from config.ui_element_names import (
     , MENU_BAR_HELP_ITEM_ABOUT
 )
 from config.assets_path import APP_LOGO_PATH
+from config.constants import PERCENT_OF_APPLICATION_CONSUMING_MAIN_SCREEN
 
 
 class MainWindowView(QtWidgets.QMainWindow):
@@ -25,7 +26,7 @@ class MainWindowView(QtWidgets.QMainWindow):
         self.setObjectName("MainWindow")
 
         main_screen_resolution = get_primary_screen_geometry()
-        application_window_size = main_screen_resolution.size() * 0.6    # TODO: Dynamic size according to the main monitor size. 60% of the main monitor size.
+        application_window_size = main_screen_resolution.size() * PERCENT_OF_APPLICATION_CONSUMING_MAIN_SCREEN    # ? Dynamic size according to the main monitor size.
         self.setGeometry(0, 0, application_window_size.width(), application_window_size.height())    # Set the window size
         self.move(
                 # floor((main_screen_resolution.width() - self.width()) / 2)

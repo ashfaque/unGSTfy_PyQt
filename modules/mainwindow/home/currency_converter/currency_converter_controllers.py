@@ -9,6 +9,7 @@ from config.ui_element_names import (
     CURRENCY_CONVERT_CURRENCY_LIST_NOT_AVAILABLE_TEXT
     , CURRENCY_CONVERT_EXCHANGE_RATE_NOT_AVAILABLE_TEXT
 )
+from config.constants import DECIMAL_PRECISION
 
 
 class CurrencyConverterController(CurrencyConverterView):
@@ -145,7 +146,7 @@ class CurrencyConverterController(CurrencyConverterView):
             result_convert_to = (convert_from_value / EUR_exchange_of_1_convert_from) * EUR_exchange_of_1_convert_to
 
             self.lineEdit_Currency_To.blockSignals(True)    # ? Block signals to prevent infinite loop.
-            self.lineEdit_Currency_To.setText(str(round(result_convert_to, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
+            self.lineEdit_Currency_To.setText(str(round(result_convert_to, DECIMAL_PRECISION)))
             self.lineEdit_Currency_To.blockSignals(False)    # ? Unblock signals.
 
         elif (sender == self.lineEdit_Currency_To and is_input_valid) or (sender == self.comboBox_Currency_To and self.lineEdit_Currency_To.text()):
@@ -153,5 +154,5 @@ class CurrencyConverterController(CurrencyConverterView):
             result_convert_from = (convert_to_value / EUR_exchange_of_1_convert_to) * EUR_exchange_of_1_convert_from
 
             self.lineEdit_Currency_From.blockSignals(True)    # ? Block signals to prevent infinite loop.
-            self.lineEdit_Currency_From.setText(str(round(result_convert_from, 2)))    # TODO: Round to 2 decimal places. In config.constants.py, define a constant for number of decimal places.
+            self.lineEdit_Currency_From.setText(str(round(result_convert_from, DECIMAL_PRECISION)))
             self.lineEdit_Currency_From.blockSignals(False)    # ? Unblock signals.

@@ -3,7 +3,13 @@ import sys
 
 from AshLogger import AshLogger
 from PyQt6 import QtCore
-from config.constants import LOG_FILE_SIZE
+from config.constants import (
+    DEV_MODE_APP_DATA_DIR_NAME
+    , LOG_FILE_NAME
+    , LOG_FILE_DIR
+    , LOG_FILE_SIZE
+    , LOG_FILE_BACKUPS
+)
 
 
 # ? Get the writable location for application data, platform independent.
@@ -11,15 +17,15 @@ def get_app_data_dir():    # Declared this function here to avoid circular impor
     if getattr(sys, 'frozen', False):
         return QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.AppDataLocation)
     else:    # If development environment.
-        return os.getcwd() + "/_temp"    # TODO: Global variable defined in config/constants.py
+        return os.getcwd() + f"/{DEV_MODE_APP_DATA_DIR_NAME}"
 
 
 
 logger_obj = AshLogger(
-                file_name='unGSTfy_DEBUG.log'    # TODO: DEFINE IT IN A VARIABLE.
-                , file_location=os.path.join(get_app_data_dir(), 'logs')    # TODO: DEFINE IT IN A VARIABLE.
+                file_name=LOG_FILE_NAME
+                , file_location=os.path.join(get_app_data_dir(), LOG_FILE_DIR)
                 , max_bytes=LOG_FILE_SIZE * 1000 * 1000    # In bytes
-                , max_backups=1    # TODO: DEFINE IT IN A VARIABLE.
+                , max_backups=LOG_FILE_BACKUPS
             )
 logger = logger_obj.setup_logger()
 
@@ -37,6 +43,9 @@ sys.excepthook = custom_exception_handler
 
 # Utility function to trigger a manual exception and log it.
 def trigger_manual_exception_and_log_it(exception_msg: str, close_app: bool = False):
+    '''
+    Usage:    trigger_manual_exception_and_log_it("Error: Failed to create table" + query.lastError().text(), close_app=True)
+    '''
     try:
         raise Exception(str(exception_msg))
     except Exception as ex:
@@ -44,8 +53,6 @@ def trigger_manual_exception_and_log_it(exception_msg: str, close_app: bool = Fa
     finally:
         if close_app:
             sys.exit(1)
-
-
 
 
 

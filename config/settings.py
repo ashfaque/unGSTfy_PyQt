@@ -155,7 +155,8 @@ class LocalDatabaseModel:
         ''' + ', '.join([f"{column_name} {' '.join(column_attributes)}" for column_name, column_attributes in columns.items()]) + ')'
 
         if not query.exec(query_to_execute):
-            print("Error: Failed to create table", query.lastError().text())    # TODO: To show this to user.
+            # print("Error: Failed to create table", query.lastError().text())
+            trigger_manual_exception_and_log_it("Error: Failed to create table" + query.lastError().text(), close_app=True)
         else:   # If table created successfully.
             self.db.commit()
 
@@ -184,7 +185,8 @@ class LocalDatabaseModel:
         if query.exec():
             self.db.commit()
         else:
-            print("Error: Failed to insert data: ", query.lastError().text())    # TODO: To show this to user.
+            # print("Error: Failed to insert data: ", query.lastError().text())
+            trigger_manual_exception_and_log_it("Error: Failed to insert data: ", query.lastError().text(), close_app=True)
         query.finish()
         query.clear()
 
@@ -206,7 +208,8 @@ class LocalDatabaseModel:
         if query.exec():
             self.db.commit()
         else:
-            print("Error: Failed to update data: ", query.lastError().text())    # TODO: To show this to user.
+            # print("Error: Failed to update data: ", query.lastError().text())
+            trigger_manual_exception_and_log_it("Error: Failed to update data: ", query.lastError().text(), close_app=True)
         query.finish()
         query.clear()
 
@@ -225,7 +228,8 @@ class LocalDatabaseModel:
         if query.exec():
             self.db.commit()
         else:
-            print("Error: Failed to delete data: ", query.lastError().text())    # TODO: To show this to user.
+            # print("Error: Failed to delete data: ", query.lastError().text())
+            trigger_manual_exception_and_log_it("Error: Failed to delete data: ", query.lastError().text(), close_app=True)
         query.finish()
         query.clear()
 
@@ -257,7 +261,8 @@ class LocalDatabaseModel:
                 # result.append([query.value(i) for i in range(len(columns))])    # [query.value(0), query.value(1), query.value(2)]
             self.db.commit()
         else:
-            print("Error: Failed to fetch data: ", query.lastError().text())    # TODO: To show this to user.
+            # print("Error: Failed to fetch data: ", query.lastError().text())
+            trigger_manual_exception_and_log_it("Error: Failed to fetch data: ", query.lastError().text(), close_app=True)
         query.finish()
         query.clear()
         return result
@@ -282,7 +287,8 @@ class LocalDatabaseModel:
                 result.append(row)    # [{column1: value1, column2: value2}, {column1: value1, column2: value2}, ...]
             self.db.commit()
         else:
-            print("Error: Failed to fetch data: ", query.lastError().text())    # TODO: To show this to user.
+            # print("Error: Failed to fetch data: ", query.lastError().text())
+            trigger_manual_exception_and_log_it("Error: Failed to fetch data: ", query.lastError().text(), close_app=True)
         query.finish()
         query.clear()
         return result
