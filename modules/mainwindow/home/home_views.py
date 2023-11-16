@@ -40,7 +40,7 @@ class HomeView(QtWidgets.QWidget):
         self.pushButton_Calculate_Taxable_Value.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily(HOME_BUTTONS_FONT_FAMILY)
-        font.setPointSize(20)    # TODO: Dynamic font size according to the main monitor size.
+        font.setPointSize(20)    # FONT SIZE
         self.pushButton_Calculate_Taxable_Value.setFont(font)
         self.pushButton_Calculate_Taxable_Value.setObjectName("pushButton_Calculate_Taxable_Value")
         self.horizontal_Layout_Calculate_Taxable_Value.addWidget(self.pushButton_Calculate_Taxable_Value)
@@ -49,7 +49,7 @@ class HomeView(QtWidgets.QWidget):
         # Spacer 1
         self.horizontalLayout_Spacer1 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_Spacer1.setObjectName("horizontalLayout_Spacer1")
-        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)    # TODO: Dynamic 
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)    # PIXELS
         self.horizontalLayout_Spacer1.addItem(spacerItem)
         self.verticalLayout_all_buttons.addLayout(self.horizontalLayout_Spacer1)
 
@@ -64,7 +64,7 @@ class HomeView(QtWidgets.QWidget):
         self.pushButton_Calculate_GST_Percent.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily(HOME_BUTTONS_FONT_FAMILY)
-        font.setPointSize(20)    # TODO: Dynamic font size according to the main monitor size.
+        font.setPointSize(20)    # FONT SIZE
         self.pushButton_Calculate_GST_Percent.setFont(font)
         self.pushButton_Calculate_GST_Percent.setObjectName("pushButton_Calculate_GST_Percent")
         self.horizontal_Layout_Calculate_GST_Percent.addWidget(self.pushButton_Calculate_GST_Percent)
@@ -73,7 +73,7 @@ class HomeView(QtWidgets.QWidget):
         # Spacer 2
         self.horizontalLayout_Spacer2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_Spacer2.setObjectName("horizontalLayout_Spacer2")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)    # TODO: Dynamic 
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)    # PIXELS
         self.horizontalLayout_Spacer2.addItem(spacerItem1)
         self.verticalLayout_all_buttons.addLayout(self.horizontalLayout_Spacer2)
 
@@ -88,7 +88,7 @@ class HomeView(QtWidgets.QWidget):
         self.pushButton_Currency_Converter.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily(HOME_BUTTONS_FONT_FAMILY)
-        font.setPointSize(20)    # TODO: Dynamic font size according to the main monitor size.
+        font.setPointSize(20)    # FONT SIZE
         self.pushButton_Currency_Converter.setFont(font)
         self.pushButton_Currency_Converter.setObjectName("pushButton_Currency_Converter")
         self.horizontal_Layout_Currency_Converter.addWidget(self.pushButton_Currency_Converter)

@@ -32,7 +32,7 @@ class GSTPercentView(QtWidgets.QWidget):
         self.lineEdit_Total_Amount.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily(GST_PERCENT_LINEEDIT_FONT_FAMILY)
-        font.setPointSize(16)    # TODO : Dynamic
+        font.setPointSize(16)    # FONT SIZE
         self.lineEdit_Total_Amount.setFont(font)
         self.lineEdit_Total_Amount.setObjectName("lineEdit_Total_Amount")
         self.horizontalLayout_Total_Amount.addWidget(self.lineEdit_Total_Amount)
@@ -49,7 +49,7 @@ class GSTPercentView(QtWidgets.QWidget):
         self.lineEdit_Taxable_Value.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily(GST_PERCENT_LINEEDIT_FONT_FAMILY)
-        font.setPointSize(16)    # TODO : Dynamic
+        font.setPointSize(16)    # FONT SIZE
         self.lineEdit_Taxable_Value.setFont(font)
         self.lineEdit_Taxable_Value.setObjectName("lineEdit_Taxable_Value")
         self.horizontalLayout_Taxable_Value.addWidget(self.lineEdit_Taxable_Value)
@@ -66,7 +66,7 @@ class GSTPercentView(QtWidgets.QWidget):
         self.label_Result_Value.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily(GST_PERCENT_LABEL_FONT_FAMILY)
-        font.setPointSize(20)    # TODO : Dynamic
+        font.setPointSize(20)    # FONT SIZE
         self.label_Result_Value.setFont(font)
         self.label_Result_Value.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.IBeamCursor))
         self.label_Result_Value.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)

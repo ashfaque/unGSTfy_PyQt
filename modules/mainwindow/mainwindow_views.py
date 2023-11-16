@@ -1,5 +1,7 @@
 # Only define GUIs in this file, and move the logic to the controllers.
 
+from math import ceil
+
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 from utils.global_functions import get_primary_screen_geometry, get_custom_geometry_wrt_primary_screen
@@ -43,7 +45,7 @@ class MainWindowView(QtWidgets.QMainWindow):
         self.setCentralWidget(self.stackedcentralwidget)
 
         self.menubar = QtWidgets.QMenuBar(parent=self)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 715, 22))    # TODO: Dynamic geometry size according to the main monitor size. Also font size of items.
+        self.menubar.setGeometry(QtCore.QRect(0, 0, application_window_size.width(), ceil(2/100*main_screen_resolution.height())))    # 2% of the main screen height. [Older Value: 715, 22]
         self.menubar.setObjectName("menubar")
 
         self.menuMenu = QtWidgets.QMenu(parent=self.menubar)
