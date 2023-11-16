@@ -17,8 +17,8 @@ class AboutDialogView(QtWidgets.QDialog):
         super().__init__(parent=parent)
 
         self.setWindowTitle(MENU_BAR_HELP_ITEM_ABOUT)
-        custom_geometry = get_custom_geometry_wrt_primary_screen(0.2)    # 20% of the main screen size.
-        self.setFixedSize(custom_geometry.width(), custom_geometry.height())    # 400, 300
+        custom_about_geometry = get_custom_geometry_wrt_primary_screen(0.2)    # 20% of the main screen size.
+        self.setFixedSize(custom_about_geometry.width(), custom_about_geometry.height())    # 400, 300
         self.setSizeGripEnabled(False)    # Allow resizing
 
         self.init_ui()
