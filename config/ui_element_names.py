@@ -5,7 +5,7 @@ CLOSE_BUTTON_NAME = 'Close'
 
 # about
 APP_NAME = 'unGSTfy'
-APP_VERSION = '0.1.0'
+APP_VERSION = '1.0.0'
 APP_AUTHOR = 'Ashfaque Alam'
 APP_DESCRIPTION = 'A simple GUI application to calculate GST from the total amount along with the GST rate and vice versa. Bundled with currency converter.'
 

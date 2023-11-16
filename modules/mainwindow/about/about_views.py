@@ -1,5 +1,6 @@
 from PyQt6 import QtWidgets, QtCore
 
+from utils.global_functions import get_custom_geometry_wrt_primary_screen
 from config.ui_element_names import (
     MENU_BAR_HELP_ITEM_ABOUT
     , APP_NAME
@@ -10,13 +11,15 @@ from config.ui_element_names import (
 )
 
 
+
 class AboutDialogView(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
 
         self.setWindowTitle(MENU_BAR_HELP_ITEM_ABOUT)
-        self.setFixedSize(400, 300)    # Set an initial fixed size, can be adjusted    # TODO: Dynamic size according to the main monitor size.
-        self.setSizeGripEnabled(True)    # Allow resizing
+        custom_geometry = get_custom_geometry_wrt_primary_screen(0.2)    # 20% of the main screen size.
+        self.setFixedSize(custom_geometry.width(), custom_geometry.height())    # 400, 300
+        self.setSizeGripEnabled(False)    # Allow resizing
 
         self.init_ui()
 
