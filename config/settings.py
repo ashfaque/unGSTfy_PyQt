@@ -234,7 +234,7 @@ class LocalDatabaseModel:
         query.clear()
 
 
-    def select_data(self, table_name: str, columns: list, where: dict):    # ? eg., columns = ['id', 'date', 'json_data'], where = {'id': 1}
+    def select_data(self, table_name: str, columns: list, where: dict, raw: str):    # ? eg., columns = ['id', 'date', 'json_data'], where = {'id': 1}
         query = QtSql.QSqlQuery()
         query_to_execute = f'''
                 SELECT
@@ -243,7 +243,8 @@ class LocalDatabaseModel:
                     {table_name}
                 WHERE
                     {', '.join([f"{key} = :{key}" for key in where.keys()])}
-        '''    # TODO: Conditional operators needs to be implemented. along with date(data_date) etc.
+        '''
+        query_to_execute += f" {raw}"    # ? eg., raw = "ORDER BY id DESC LIMIT 1" or "AND id = 1" or "date(date_column) > date('now', '-1 day')", etc.
 
         query.prepare(query_to_execute)
         for key, value in where.items():
