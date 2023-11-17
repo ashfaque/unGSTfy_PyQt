@@ -165,7 +165,7 @@ class LocalDatabaseModel:
         # self.db.close()
 
 
-    # TODO: Implement alter table method, if anything in column names or attributes changes.
+    # TODO: Implement alter table method, if anything in column names or any attributes changes.
 
 
     def insert_data(self, table_name: str, data: dict):    # ? eg., data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}
