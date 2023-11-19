@@ -16,6 +16,7 @@ indent_style = space
 indent_size = 2
 max_line_length = off
 trim_trailing_whitespace = false
+insert_final_newline = false
 
 # Matches multiple files with brace expansion notation
 [*.{html,css,js}]
