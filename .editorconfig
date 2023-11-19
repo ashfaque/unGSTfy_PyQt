@@ -1,0 +1,42 @@
+# EditorConfig is awesome: https://EditorConfig.org, install extension: `EditorConfig for VS Code`
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+charset = utf-8
+end_of_line = crlf
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+indent_style = space
+indent_size = 2
+max_line_length = off
+trim_trailing_whitespace = false
+
+# Matches multiple files with brace expansion notation
+[*.{html,css,js}]
+indent_style = space
+indent_size = 2
+
+[*.py]
+max_line_length = off
+indent_style = space
+indent_size = 4
+
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
+
+# Indentation override for all `.ui` under `_ui_archives` directory
+[_ui_archives/**.ui]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either commands.sh or aliases.sh
+[{commands.sh, aliases.sh}]
+max_line_length = off
+trim_trailing_whitespace = false
