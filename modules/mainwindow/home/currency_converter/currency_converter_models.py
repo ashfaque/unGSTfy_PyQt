@@ -6,8 +6,8 @@ from config.settings import LocalDatabaseModel
 
 class CurrencyConverterCurrenciesListModel(LocalDatabaseModel):
     # Define table name and columns as class attributes
-    TABLE_NAME = "currency_converter_currencies_list_tbl"
-    COLUMNS = {    # Column `id` generated and set to auto-incremented by default. No need to define it here.
+    TABLE_NAME = "currency_converter_currencies_list_tbl"    # * NB: If table name changes, then new table with changed name will be created. And older table will stay as it is. But not used.
+    COLUMNS = {    # Column `id` generated and set to auto-incremented by default. No need to define it here.    # * NB: Any changes in column's datatype or column name will make the older table to be dropped and new table with changed columns will be created.
         'name': ['TEXT', 'NULL']
         , 'code': ['TEXT', 'NULL', 'UNIQUE']
         , 'display_name': ['TEXT', 'NULL']
@@ -38,8 +38,8 @@ class CurrencyConverterCurrenciesListModel(LocalDatabaseModel):
 
 class CurrencyConverterExchangeRatesModel(LocalDatabaseModel):
     # Define table name and columns as class attributes
-    TABLE_NAME = "currency_converter_exchange_rates_tbl"
-    COLUMNS = {    # Column `id` generated and set to auto-incremented by default. No need to define it here.
+    TABLE_NAME = "currency_converter_exchange_rates_tbl"    # * NB: If table name changes, then new table with changed name will be created. And older table will stay as it is. But not used.
+    COLUMNS = {    # Column `id` generated and set to auto-incremented by default. No need to define it here.    # * NB: Any changes in columns will make the older table to be dropped and new table with changed columns will be created.
         # 'date': ['TEXT', 'NOT NULL', 'DEFAULT CURRENT_TIMESTAMP']
         # 'data_date': ['DATE', 'NULL', 'DEFAULT CURRENT_DATE']    # or, you can use: 'DEFAULT (date("now"))'
         'data_date': ['DATE', 'NULL']    # ? One data per day.

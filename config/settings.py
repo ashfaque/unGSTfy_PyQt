@@ -107,6 +107,7 @@ class LocalDatabaseModel:
 
         # Create the table if it doesn't exist
         self.create_table_if_not_exists(self.TABLE_NAME, self.COLUMNS)
+        # self.update_table_if_changes_detected(self.TABLE_NAME, self.COLUMNS)    # * BE CAREFUL: This will drop the table and create new table with changed columns. So, use it only when you want to change the columns of the table.
 
 
     def __enter__(self):
@@ -164,8 +165,62 @@ class LocalDatabaseModel:
         query.clear()
         # self.db.close()
 
+    def update_table_if_changes_detected(self, table_name: str, columns: dict):    # ? eg., columns = {'date': ['TEXT', 'NOT NULL', 'DEFAULT CURRENT_TIMESTAMP'], 'json_data': ['TEXT', 'NOT NULL', 'DEFAULT {}']}
+        # # print("Error: Failed to create table", query.lastError().text())
+        # trigger_manual_exception_and_log_it("Error: Failed to create table" + query.lastError().text(), close_app=True)
+        # ...
+        query = QtSql.QSqlQuery()
+        query_to_execute = f'PRAGMA table_info({table_name});'
+        if not query.exec(query_to_execute):
+            # print("Error: Failed to fetch table info", query.lastError().text())
+            trigger_manual_exception_and_log_it("Error: Failed to fetch table info" + query.lastError().text(), close_app=True)
+            return None
 
-    # TODO: Implement alter table method, if anything in column names or attributes changes.
+        existing_columns = {}
+        while query.next():
+            column_name = query.value("name")
+            column_type = query.value("type")
+            existing_columns[column_name] = column_type
+            # TODO: Future Scope: Add support for column attributes like 'NOT NULL', 'DEFAULT CURRENT_TIMESTAMP', etc.
+
+        query.finish()
+        query.clear()
+
+        if not existing_columns:
+            return
+
+        existing_columns.pop('id', None)    # ? Remove 'id' column from existing_columns dict.
+        # Check for differences between existing and desired columns
+        differences = set(columns.keys()) - set(existing_columns.keys())
+        if not differences:    # Checking Vice Versa.
+            differences = set(existing_columns.keys()) - set(columns.keys())
+        if differences:
+            # Perform DROP TABLE query if differences exist.
+            query_to_execute = f"DROP TABLE {table_name};"
+            if not query.exec(query_to_execute):
+                # print("Error: Failed to drop table", query.lastError().text())
+                trigger_manual_exception_and_log_it("Error: Failed to drop table" + query.lastError().text(), close_app=True)
+            else:
+                self.db.commit()
+            query.finish()
+            query.clear()
+
+            # Perform CREATE TABLE query if differences exist.
+            self.create_table_if_not_exists(table_name, columns)
+
+            # # Perform ALTER TABLE query if differences exist
+            # for column_name in differences:
+            #     column_attributes = ' '.join(columns[column_name])
+            #     query_to_execute = f"ALTER TABLE {table_name} ADD COLUMN {column_name} {column_attributes};"
+
+            #     query = QtSql.QSqlQuery()
+            #     if not query.exec(query_to_execute):
+            #         print("Error: Failed to alter table", query.lastError().text())
+            #     else:
+            #         self.db.commit()
+
+            #     query.finish()
+            #     query.clear()
 
 
     def insert_data(self, table_name: str, data: dict):    # ? eg., data = {'date': '2021-08-01', 'json_data': json.dumps({'key1': 'value1', 'key2': 'value2'})}
@@ -234,7 +289,7 @@ class LocalDatabaseModel:
         query.clear()
 
 
-    def select_data(self, table_name: str, columns: list, where: dict, raw: str):    # ? eg., columns = ['id', 'date', 'json_data'], where = {'id': 1}
+    def select_data(self, table_name: str, columns: list, where: dict, raw: str=None):    # ? eg., columns = ['id', 'date', 'json_data'], where = {'id': 1}
         query = QtSql.QSqlQuery()
         query_to_execute = f'''
                 SELECT
@@ -244,7 +299,8 @@ class LocalDatabaseModel:
                 WHERE
                     {', '.join([f"{key} = :{key}" for key in where.keys()])}
         '''
-        query_to_execute += f" {raw}"    # ? eg., raw = "ORDER BY id DESC LIMIT 1" or "AND id = 1" or "date(date_column) > date('now', '-1 day')", etc.
+        if raw:
+            query_to_execute += f" {raw}"    # ? eg., raw = "ORDER BY id DESC LIMIT 1" or "AND id = 1" or "date(date_column) > date('now', '-1 day')", etc.
 
         query.prepare(query_to_execute)
         for key, value in where.items():
