@@ -1,5 +1,5 @@
 import atexit
-from pdb import set_trace as bp
+from pdb import set_trace as bp    # Use bp() to set breakpoints in the code for debugging.
 import sys
 
 from PyQt6.QtWidgets import QApplication
