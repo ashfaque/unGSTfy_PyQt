@@ -32,3 +32,14 @@ pyinstaller --noconfirm --onedir --console --clean --name "unGSTfy" --icon "D:/F
 - Windows : `C:/Users/USERNAME/AppData/Roaming/unGSTfy/`
 - macOS : 
 - LINUX : 
+
+
+#### Use QThread for long running task without freezing GUI: https://realpython.com/python-pyqt-qthread/
+
+
+'''
+os.path.expanduser
+Used to expand an initial path component ~( tilde symbol) or ~user in the given path to user's home directory.
+On Unix platforms, an initial ~ is replaced by the value of HOME environment variable, if it is set. Otherwise, os.path.expanduser() method search for user’s home directory in password directory using an in-built module pwd. Path containing an initial ~user component is looked up directly in the password directory.
+On Windows platform, an initial ~ is replaced by the value of HOME and USERPROFILE environment variable, if it is set. Otherwise, HOMEPATH and HOMEDRIVE environment variable will be used. While Path containing an initial ~user component is handled by replacing the last directory component with ~user from the path derived above.
+'''
