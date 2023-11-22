@@ -8,7 +8,7 @@ from PyQt6.QtCore import QFile, QLockFile
 from modules.mainwindow.mainwindow_controllers import MainWindowController
 from config.settings import LocalDatabaseManager
 from config.ui_element_names import APP_NAME
-from config import app_logging    # ? Setup logging for the entire application.
+from config import app_logging    # ? Setup logging for the entire application. By just importing this module, logging is setup for the entire application.
 
 
 
