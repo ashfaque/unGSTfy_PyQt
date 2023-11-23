@@ -69,3 +69,9 @@ class MainWindowController(MainWindowView):
         else:
             event.ignore()
     '''
+
+    def showAndActivate(self):    # ? Custom method: Called when the system tray icon is clicked.
+        # Ensure the window is always visible when it is shown.
+        self.showNormal()
+        self.activateWindow()
+        self.raise_()    # Bring the window to the front of all the other windows (even if it is minimized).

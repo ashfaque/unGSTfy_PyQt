@@ -8,6 +8,7 @@ from PyQt6.QtCore import QFile, QLockFile
 from modules.mainwindow.mainwindow_controllers import MainWindowController
 from config.settings import LocalDatabaseManager
 from config.ui_element_names import APP_NAME
+from utils.system_tray import SystemTrayIcon    # setup_system_tray_icon
 from config import app_logging    # ? Setup logging for the entire application. By just importing this module, logging is setup for the entire application.
 
 
@@ -26,6 +27,8 @@ if __name__ == "__main__":
 
     if lock_file.tryLock():    # If able to lock the file, it means no other instance of the application is running.
         main_window_controller_obj = MainWindowController()
+        # setup_system_tray_icon(app, main_window_controller_obj)
+        SystemTrayIcon(main_window_controller_obj, app)
         atexit.register(LocalDatabaseManager.close_connection)
         atexit.register(remove_lock_file)
         sys.exit(app.exec())
