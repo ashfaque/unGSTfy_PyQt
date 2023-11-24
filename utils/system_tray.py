@@ -1,4 +1,4 @@
-from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6 import QtWidgets, QtGui
 from config.assets_path import APP_LOGO_PATH
 from config.ui_element_names import (
     SYSTEM_TRAY_ICON_TOOLTIP_TEXT
@@ -12,7 +12,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         icon = QtGui.QIcon(APP_LOGO_PATH)
         super(__class__, self).__init__(icon, parent)
         self.setVisible(True)
-        # self.activated.connect(main_window_controller_obj.showAndActivate)    # ? Show the main window when the system tray icon is clicked (both LMB & RMB).
+        self.activated.connect(self.onTrayIconClicked)    # ? Show the main window when the system tray icon is clicked (both LMB & RMB).
         self.setToolTip(SYSTEM_TRAY_ICON_TOOLTIP_TEXT)
         self.main_win_obj = main_win_controller_obj  # <----- name it whatever you want ie self.abc will also work
 
@@ -32,6 +32,10 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
         # Show the system tray icon.
         self.show()
+
+    def onTrayIconClicked(self, reason):
+        if reason == self.ActivationReason.Trigger:
+            self.main_win_obj.showAndActivate()
 
 
 
