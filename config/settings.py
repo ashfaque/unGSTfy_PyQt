@@ -9,6 +9,8 @@ from config.constants import INI_SETTINGS_FILE_NAME, DB_FILE_NAME
 from config.app_logging import trigger_manual_exception_and_log_it, get_app_data_dir
 
 
+DEBUG_MODE = True    # ! IMPORTANT: Set to `False` before building the executable and revert it back to `True` before commit. This is used to disable some features like changing the Windows OS registry, etc. which is not required in development environment.
+
 
 class AppSettingsManager:
     def __init__(self):
