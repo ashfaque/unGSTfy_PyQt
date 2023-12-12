@@ -1,0 +1,26 @@
+Software License Agreement
+
+IMPORTANT: READ THIS AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE.
+
+1. License Grant:
+   The developer grants you a non-exclusive, non-transferable license to use the software for your personal or business purposes.
+
+2. Restrictions:
+   You may not distribute, sublicense, rent, lease, or sell the software. You may not reverse engineer, decompile, or disassemble the software.
+
+3. Ownership:
+   The software and all rights, including intellectual property rights, are owned by the developer.
+
+4. Warranty Disclaimer:
+   The software is provided "as is" without warranty of any kind, either express or implied, including, but not limited to, the implied warranties of merchantability, fitness for a particular purpose, or non-infringement.
+
+5. Limitation of Liability:
+   In no event shall the developer be liable for any special, incidental, indirect, or consequential damages of any kind, or any damages whatsoever resulting from loss of use, data, or profits, whether or not advised of the possibility of damage, and on any theory of liability, arising out of or in connection with the use or performance of this software.
+
+6. Termination:
+   The license is effective until terminated. Your rights under this license will terminate automatically without notice from the developer if you fail to comply with any term(s) herein.
+
+7. Governing Law:
+   This agreement shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions.
+
+BY INSTALLING OR USING THE SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTOOD THIS AGREEMENT AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.
