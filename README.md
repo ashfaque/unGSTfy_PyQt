@@ -44,4 +44,6 @@ On Unix platforms, an initial ~ is replaced by the value of HOME environment var
 On Windows platform, an initial ~ is replaced by the value of HOME and USERPROFILE environment variable, if it is set. Otherwise, HOMEPATH and HOMEDRIVE environment variable will be used. While Path containing an initial ~user component is handled by replacing the last directory component with ~user from the path derived above.
 '''
 
+#### Creating Setup installer of your exe executable for Windows
+Download and install InnoSetup from [here](https://jrsoftware.org/isdl.php) and use the script [inno_setup_script.iss](inno_setup_script.iss) to create a setup of your executable file. But first you need to create a `py2direxe` build.
 Multi resolution .ico file from png file [https://www.aconvert.com/icon/png-to-ico/](https://www.aconvert.com/icon/png-to-ico/)
